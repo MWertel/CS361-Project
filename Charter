@@ -1,13 +1,21 @@
 Group Name: Best Group
+
 Availability: Thursday Nights after 7
+
 Response time: 24 hours at most
+
 Definition of done: Tests pass, at least two people need to review
+
 Scrum meeting format and frequency: During lab and thursday nights, more if needed
+
 Procedure for adopting policies: Democracy
   a. Squiggly brakets on same line as function or class
   b. comment what functions do
   c. comment to clear up any confusion
+  d. camel case
+  
 Procedure for handling member: Message, Email, corner in lab 
+
 Signature:
 // Hello There - Valentine
 //HELLO - Danh
