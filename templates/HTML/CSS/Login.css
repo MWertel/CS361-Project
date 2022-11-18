@@ -1,0 +1,12 @@
+.LoginForm{
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 0.5rem 1rem;
+    position: relative;
+}
+label{
+    display: block;
+    text-align:center;
+    line-height:150%;
+    font-size:1.5rem;
+}
