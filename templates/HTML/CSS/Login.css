@@ -1,12 +1,47 @@
-.LoginForm{
-    display: grid;
-    grid-template-columns: auto;
-    grid-gap: 0.5rem 1rem;
-    position: relative;
+
+.loginBox{
+    position: static;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    /*transform: translate(-50%, -50%);*/
+    background: rgba(0,0,0,.5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 10px;
 }
-label{
-    display: block;
-    text-align:center;
-    line-height:150%;
-    font-size:1.5rem;
+
+.loginBox .loginForm{
+    display:grid;
+    grid-gap: 0.2rem;
+    font-size:14px;
+}
+
+.loginBox .loginForm input{
+    position: relative;
+    border-radius: 8px;
+    border-color: black ;
+    grid-gap: 5px;
+}
+
+.loginBox .loginForm input:focus {
+    background-color:green;
+}
+
+.loginBox .loginForm label{
+    position: relative;
+    text-align: center;
+    font-size: 1.5rem;
+
+}
+.loginButton{
+    display: grid;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    transition-duration: 250ms;
+}
+
+.loginButton:hover{
+    background-color:green;
 }
