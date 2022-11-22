@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="CSS/Login.css" type="text/css">
+
+</head>
+<body>
+
+
+<div class = "loginBox">
+    <!--Target value is set to "_self" because we want the response page return on the current page.-->
+    <!--TODO: action need to set to what needed to be done.-->
+    <!--
+     #Check database
+     if correct : lead to another page.
+     if incorrect: return an error message of "Incorrect credential" of sort.
+     -->
+    <form  class ="loginForm" target="_self" action = "/login/" method = "post"  >{%csrf_token%}
+
+        <label for="Username">Username</label>
+        <input class="inputBox" type="text" id="Username">
+
+        <label for="Password">Password</label>
+        <input type="text" id="Password" >
+
+        <!--TODO: onclick: submit the username and password to verify if it's valid.-->
+        <button class ="loginButton" type="submit" onclick="">Login</button>
+    </form>
+    {{ error }}
+</div>
+
+</body>
+</html>
