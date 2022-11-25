@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from .models import Account, Supervisor
+from .models import Account, Supervisor, Instructor, TA
 
 
 # Create your views here.
