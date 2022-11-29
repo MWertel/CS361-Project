@@ -14,4 +14,47 @@ class Supervisor(models.Model):
     telephone = models.CharField(max_length= 20)
     address = models.CharField(max_length = 40)
 
+    def createCourse(self, department, courseNum, courseName, instructor):
+        pass
+
+    def deleteCourse(self, department, courseNum):
+        pass
+
+    def editCourse(self, department, courseNum):
+        pass
+
+
+class Course(object):
+
+    def __init__(self, department, courseNum, name, instructor):
+        self.department = department
+        self.courseNum = courseNum
+        self.name = name
+        self.instructor = instructor
+
+    def setName(self, name):
+        pass
+
+    def getName(self):
+        pass
+
+    def setInstructor(self, instructor):
+        pass
+
+    def getInstructor(self):
+        pass
+
+    def setCourseNum(self, courseNum):
+        pass
+
+    def getCourseNum(self):
+        pass
+
+    def getDepartment(self):
+        pass
+
+    def setDepartment(self, department):
+        pass
+
+
 
