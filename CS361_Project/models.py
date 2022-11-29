@@ -1,11 +1,13 @@
 from django.db import models
 
+
 class Account(models.Model):
 
     id = models.IntegerField(unique = True, primary_key= True)
     username = models.CharField(max_length=30)
     password = models.CharField(max_length = 30)
     role = models.CharField(max_length=30)
+
 
 class Supervisor(models.Model):
     id = models.ForeignKey("Account", primary_key=True, on_delete= models.CASCADE)
@@ -31,6 +33,9 @@ class Course(object):
         self.courseNum = courseNum
         self.name = name
         self.instructor = instructor
+
+    def __str__(self):
+        pass
 
     def setName(self, name):
         pass

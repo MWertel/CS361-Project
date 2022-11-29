@@ -9,5 +9,5 @@ class test_GetCourseNum(TestCase):
 
     def test_GetCourseNum(self):
         self.setUp()
-        self.assertTrue(self.rightArgs.getCourseNum() == 150, msg="Course number should be 150 was "
-                                                                  + self.rightArgs.getCourseNum())
+        self.assertTrue(self.rightArgs.getCourseNum() == 150,
+                        msg="Course number should be \"150\" was \"" + self.rightArgs.getCourseNum() + "\"")

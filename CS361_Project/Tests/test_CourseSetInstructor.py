@@ -10,8 +10,8 @@ class test_SetInstructor(TestCase):
     def test_SetInstructor(self):
         self.setUp()
         self.rightArgs.setInstructor("Bacon")
-        self.assertEqual("Bacon", self.rightArgs.instructor, msg="Instructor should be Bacon was "
-                                                                 + self.rightArgs.instructor)
+        self.assertEqual("Bacon", self.rightArgs.instructor,
+                         msg="Instructor should be \"Bacon\" was \"" + self.rightArgs.instructor + "\"")
 
     def test_WrongArgs(self):
         self.setUp()

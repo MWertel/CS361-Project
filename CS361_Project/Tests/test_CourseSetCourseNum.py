@@ -10,25 +10,25 @@ class test_SetCourseNum(TestCase):
     def test_SetCourseNum(self):
         self.setUp()
         self.rightArgs.setCourseNum(250)
-        self.assertTrue(self.rightArgs.courseNum == 250, msg="Course number should be 250 was "
-                                                             + self.rightArgs.courseNum)
+        self.assertTrue(self.rightArgs.courseNum == 250,
+                        msg="Course number should be \"250\" was \"" + self.rightArgs.courseNum + "\"")
 
-    def test_NumWrongArgs(self):
+    def test_WrongArgs(self):
         self.setUp()
         with self.assertRaises(TypeError, msg="Course number should be an integer"):
             self.rightArgs.setCourseNum("150")
 
-    def test_NumNegNumber(self):
+    def test_NegativeCourseNumber(self):
         self.setUp()
         with self.assertRaises(TypeError, msg="Course number should be a positive number"):
             self.rightArgs.setCourseNum(-150)
 
-    def test_NumTooManyArgs(self):
+    def test_TooManyArgs(self):
         self.setUp()
         with self.assertRaises(TypeError, msg="Too many arguments"):
             self.rightArgs.setCourseNum(250, 251)
 
-    def test_NumTooLittleArgs(self):
+    def test_TooLittleArgs(self):
         self.setUp()
         with self.assertRaises(TypeError, msg="Not enough arguments"):
             self.rightArgs.setCourseNum()

@@ -9,5 +9,5 @@ class test_GetDepartment(TestCase):
 
     def test_GetDepartment(self):
         self.setUp()
-        self.assertEqual("CompSci", self.rightArgs.getDepartment, msg="Department should be CompSci was "
-                                                                      + self.rightArgs.getDepartment())
+        self.assertEqual("CompSci", self.rightArgs.getDepartment,
+                         msg="Department should be \"CompSci\" was \"" + self.rightArgs.getDepartment() + "\"")

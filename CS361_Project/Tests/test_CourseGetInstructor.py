@@ -9,5 +9,5 @@ class test_GetInstructor(TestCase):
 
     def test_GetInstructor(self):
         self.setUp()
-        self.assertEqual("Soronson", self.rightArgs.getInstructor, msg="Instructor should be Soronson was "
-                                                                       + self.rightArgs.getInstructor())
+        self.assertEqual("Soronson", self.rightArgs.getInstructor,
+                         msg="Instructor should be \"Soronson\" was \"" + self.rightArgs.getInstructor() + "\"")

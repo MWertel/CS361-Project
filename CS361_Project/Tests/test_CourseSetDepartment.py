@@ -10,8 +10,8 @@ class test_SetDepartment(TestCase):
     def test_SetDepartment(self):
         self.setUp()
         self.rightArgs.setDepartment("Math")
-        self.assertEqual("Math", self.rightArgs.department, msg="Department should be Math was "
-                                                                + self.rightArgs.department)
+        self.assertEqual("Math", self.rightArgs.department,
+                         msg="Department should be \"Math\" was \"" + self.rightArgs.department + "\"")
 
     def test_WrongArgs(self):
         self.setUp()

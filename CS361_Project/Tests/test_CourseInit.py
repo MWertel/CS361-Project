@@ -9,24 +9,23 @@ class test_TestInit(TestCase):
 
     def test_Department(self):
         self.setUp()
-        self.assertEqual("CompSci", self.rightArgs.department, msg="Department should be CompSci was "
-                                                                   + self.rightArgs.department)
+        self.assertEqual("CompSci", self.rightArgs.department,
+                         msg="Department should be \"CompSci\" was \"" + self.rightArgs.department + "\"")
 
     def test_CourseNum(self):
         self.setUp()
-        self.assertTrue(self.rightArgs.courseNum == 150, msg="Course number should be 150 was "
-                                                             + self.rightArgs.courseNum)
+        self.assertTrue(self.rightArgs.courseNum == 150,
+                        msg="Course number should be \"150\" was \"" + self.rightArgs.courseNum + "\"")
 
     def test_CourseName(self):
         self.setUp()
-        self.assertEqual("Survey of Computer Science", self.rightArgs.name, msg="Course name should be Survey of "
-                                                                                "Computer Science was "
-                                                                                + self.rightArgs.name)
+        self.assertEqual("Survey of Computer Science", self.rightArgs.name,
+                         msg="Course name should be \"Survey of Computer Science\" was \"" + self.rightArgs.name + "\"")
 
     def test_Instructor(self):
         self.setUp()
-        self.assertEqual("Soronson", self.rightArgs.instructor, msg="Instructor should be Soronson was "
-                                                                    + self.rightArgs.instructor)
+        self.assertEqual("Soronson", self.rightArgs.instructor,
+                         msg="Instructor should be \"Soronson\" was \"" + self.rightArgs.instructor + "\"")
 
     def test_WrongDepartmentArg(self):
         with self.assertRaises(TypeError, msg="Department name should be a string"):
@@ -55,3 +54,7 @@ class test_TestInit(TestCase):
     def test_TooLittleArgs(self):
         with self.assertRaises(TypeError, msg="Too little arguments"):
             a = Course("CompSci", 150, "Survey of Computer Science")
+
+    def test_NoParameters(self):
+        with self.assertRaises(TypeError, msg="There are no parameters"):
+            a = Course()
