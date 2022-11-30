@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Page</title>
-    <link rel="stylesheet" href="CSS/Login.css" type="text/css">
+    <link rel="stylesheet" href="Login.css" type="text/css">
 
 </head>
 <body>
@@ -16,18 +16,20 @@
      #Check database
      if correct : lead to another page.
      if incorrect: return an error message of "Incorrect credential" of sort.
+     # action = '/' for homepage.
      -->
-    <form  class ="loginForm" target="_self" action = "/login/" method = "post"  >{%csrf_token%}
+    <form  class ="loginForm" target="_self" action = "/" method = "post"  >{%csrf_token%}
 
-        <label for="Username">Username</label>
-        <input class="inputBox" type="text" id="Username">
+        <label for="username">Username</label>
+        <input class="inputBox" type="text" id="username" name = 'username'>
 
-        <label for="Password">Password</label>
-        <input type="text" id="Password" >
+        <label for="password">Password</label>
+        <input type="text" id="password" name = 'password'>
 
         <!--TODO: onclick: submit the username and password to verify if it's valid.-->
         <button class ="loginButton" type="submit" onclick="">Login</button>
     </form>
+
     {{ error }}
 </div>
 
