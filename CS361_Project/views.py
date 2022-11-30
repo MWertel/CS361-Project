@@ -22,11 +22,5 @@ class Login(View):
             return render(request, "login.html",{"error": "No account is found"})
         if wrongPassword:
             return render(request, "login.html", {"error": "Incorrect password"})
-        # else . . . -> Redirect.
-        # Pseudo Codes
-        # user.role == Supervisor:
-        # return redirect("/admin/")
-        # elif user.role == Instructor
-        # return redirect("/instructor/")
-        # elif user.role == TA
-        # return redirect("/ta/")
+        # redirect to "Manage Account"
+            # Depend on the requirement, account will have access to certain button.
