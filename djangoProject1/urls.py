@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from CS361_Project.views import Login
+
 urlpatterns = [
+    # Login is the home page -> ('')
+    path('', Login.as_view()),
     path('admin/', admin.site.urls),
 ]
