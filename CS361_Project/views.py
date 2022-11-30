@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import View
+from django.db.utils import OperationalError
 from .models import Account, Supervisor
 
 
@@ -13,10 +14,12 @@ class Login(View):
     def post(self, request):
         wrongPassword = False
         try:
-            user = Account.objects.get(username=request.POST['Username'])
-            wrongPassword = (user.password != request.POST['Password'])
+            user = Account.objects.get(username=request.POST['username'])
+            wrongPassword = (user.password != request.POST['password'])
         except Account.DoesNotExist:
             return render(request, "login.html", {"error": "User doesn't exist"})
+        except OperationalError as OE:
+            return render(request, "login.html",{"error": "No account is found"})
         if wrongPassword:
             return render(request, "login.html", {"error": "Incorrect password"})
         # else . . . -> Redirect.
