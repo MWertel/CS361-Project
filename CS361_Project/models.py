@@ -8,10 +8,23 @@ class Account(models.Model):
     role = models.CharField(max_length=30)
 
 class Supervisor(models.Model):
-    id = models.ForeignKey("Account", primary_key=True, on_delete= models.CASCADE)
+    id = models.OneToOneField("Account", primary_key= True, on_delete=models.CASCADE)
     name = models.CharField(max_length= 30)
     email = models.CharField(max_length= 30)
     telephone = models.CharField(max_length= 20)
     address = models.CharField(max_length = 40)
 
+class Instructor(models.Model):
 
+    id = models.OneToOneField("Account", primary_key= True, on_delete= models.CASCADE)
+    name = models.CharField(max_length=30)
+    email = models.CharField(max_length=30)
+    telephone = models.CharField(max_length=20)
+    address = models.CharField(max_length=40)
+
+class TA(models.Model):
+    id = models.OneToOneField("Account", primary_key= True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    email = models.CharField(max_length=30)
+    telephone = models.CharField(max_length=20)
+    address = models.CharField(max_length=40)
