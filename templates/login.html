@@ -1,13 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login Page</title>
-    <link rel="stylesheet" href="Login.css" type="text/css">
+    <!-- {now u} is a trick to live update CSS -->
+    <link rel="stylesheet" href="{% static 'styles/Login.css' %}?{% now 'U' %}" type="text/css">
 
 </head>
 <body>
-
 
 <div class = "loginBox">
     <!--Target value is set to "_self" because we want the response page return on the current page.-->
@@ -18,20 +19,18 @@
      if incorrect: return an error message of "Incorrect credential" of sort.
      # action = '/' for homepage.
      -->
-    <form  class ="loginForm" target="_self" action = "/" method = "post"  >{%csrf_token%}
-
-        <label for="username">Username</label>
-        <input class="inputBox" type="text" id="username" name = 'username'>
-
-        <label for="password">Password</label>
-        <input type="text" id="password" name = 'password'>
-
+    <h1>LOGIN PAGE</h1>
+    <form class = "loginForm" target="_self" action = "/" method = "post"  >{%csrf_token%}
+        <input type="text" id="username" name = 'username' placeholder = "Username">
+        <input type="password" id="password" name = 'password' placeholder = "Password">
         <!--TODO: onclick: submit the username and password to verify if it's valid.-->
-        <button class ="loginButton" type="submit" onclick="">Login</button>
+        <button type="submit">Login</button>
     </form>
-
-    {{ error }}
+    {% if error %}
+        <span class = "errorResponse">
+            {{ error }}
+        </span>
+    {% endif %}
 </div>
-
 </body>
 </html>
