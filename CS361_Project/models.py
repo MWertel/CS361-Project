@@ -15,7 +15,6 @@ class Supervisor(models.Model):
     address = models.CharField(max_length = 40)
 
 class Instructor(models.Model):
-
     id = models.OneToOneField("Account", primary_key= True, on_delete= models.CASCADE)
     name = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
@@ -28,9 +27,3 @@ class TA(models.Model):
     email = models.CharField(max_length=30)
     telephone = models.CharField(max_length=20)
     address = models.CharField(max_length=40)
-
-
-
-
-
-

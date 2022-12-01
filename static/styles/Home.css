@@ -1,0 +1,57 @@
+
+.bannerBox{
+    border: 1px solid black;
+    width: 100%;
+    height: 20vh;
+}
+
+.headerText{
+    display:block;
+    margin-bottom: 0;
+    margin-top : 0;
+    font-family: Andale Mono, monospace;
+    font-size: 2rem;
+}
+
+.container{
+    display:flex;
+}
+
+.homeContentBox{
+    border: 1px solid black;
+    width:85%;
+    height: 70vh;
+    overflow-x: hidden;
+    overflow-y:auto;
+    word-wrap: break-word;
+}
+
+.buttonBox {
+    margin-top : -15px;
+    padding: 10px;
+}
+
+.buttonBox button{
+    font-family: Andale Mono, monospace;
+    background-color: transparent;
+    display: block;
+    border: 1px solid black;
+    margin-block: 10px;
+    width:200px;
+    height:50px;
+    text-align:left;
+    line-height:1.1em;
+}
+
+.buttonBox button:hover{
+    border: 2px solid green;
+}
+
+.buttonText{
+    opacity: 70%;
+    width: fit-content;
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+
+
