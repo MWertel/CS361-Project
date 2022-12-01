@@ -20,6 +20,6 @@ from CS361_Project.views import Login
 
 urlpatterns = [
     # Login is the home page -> ('')
-    path('', Login.as_view()),
+    path('', Login.as_view(), name="login"),
     path('admin/', admin.site.urls),
 ]
