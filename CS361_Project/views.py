@@ -1,26 +1,25 @@
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.views import View
-from django.db.utils import OperationalError
 from .models import Account, Supervisor
-
-
 # Create your views here.
 
 class Login(View):
     def get(self, request):
-        return render(request, "login.html", {})
+        return render(request, "login.html")
 
-    # Have not implemented redirect (Waiting for redirect necessary html)
     def post(self, request):
-        wrongPassword = False
+        Username = request.POST.get("username")
+        Password = request.POST.get('password')
         try:
-            user = Account.objects.get(username=request.POST['username'])
-            wrongPassword = (user.password != request.POST['password'])
-        except Account.DoesNotExist:
-            return render(request, "login.html", {"error": "User doesn't exist"})
-        except OperationalError as OE:
-            return render(request, "login.html",{"error": "No account is found"})
-        if wrongPassword:
+            user = Account.objects.get(username=Username)
+        except:
+            return render(request, "login.html", {"error": "User does not exist"})
+        user = authenticate(request, username=Username, password=Password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home/')
+        else:
             return render(request, "login.html", {"error": "Incorrect password"})
-        # redirect to "Manage Account"
-            # Depend on the requirement, account will have access to certain button.
