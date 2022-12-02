@@ -8,9 +8,6 @@ class test_Supervisor(TestCase):
         self.supervisor = Supervisor()
 
     # Tests for createCourse
-    def test_CreateCorrectArgs(self):
-        pass
-
     def test_CreateTooManyArgs(self):
         with self.assertRaises(TypeError, msg="Too many arguments"):
             self.supervisor.createCourse("CompSci", 150, "Survey of Computer Science", "Soronson")
