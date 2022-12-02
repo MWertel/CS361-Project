@@ -2,7 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Account, Supervisor
+from .models import Account, Supervisor, Instructor, TA
+
 # Create your views here.
 
 class Login(View):

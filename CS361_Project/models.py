@@ -68,3 +68,35 @@ class Course(object):
 
     def setDepartment(self, department):
         pass
+        
+    def editCourse(self, department, courseNum):
+        pass
+
+
+class Course(object):
+
+    def __init__(self, department, courseNum, name):
+        self.department = department
+        self.courseNum = courseNum
+        self.name = name
+
+    def __str__(self):
+        pass
+
+    def setName(self, name):
+        pass
+
+    def getName(self):
+        pass
+
+    def setCourseNum(self, courseNum):
+        pass
+
+    def getCourseNum(self):
+        pass
+
+    def getDepartment(self):
+        pass
+
+    def setDepartment(self, department):
+        pass
