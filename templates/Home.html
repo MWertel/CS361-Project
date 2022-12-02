@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'styles/Home.css' %}?{% now 'U' %}" type="text/css">
+</head>
+<body>
+    <div class = "bannerBox">
+    </div>
+    <h2 class = 'headerText'>News/Notifications/Etc</h2>
+    <div class = 'container'>
+        <div class = 'homeContentBox'>
+        {# Insert contents in here: #}
+        </div>
+
+        <div class ='buttonBox'>
+            {# Change the type of button here: #}
+            <button class = 'buttonText'>Create Notification</button>
+            <button class = 'buttonText'>Manage Accounts</button>
+            <button class = 'buttonText'>Manage Courses</button>
+            <button class = 'buttonText'>Assign TAs/Instructors</button>
+            <button class = 'buttonText'>View Database</button>
+            <button class = 'buttonText'>Logout</button>
+        </div>
+    </div>
+</body>
+</html>
