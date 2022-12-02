@@ -5,7 +5,7 @@ from CS361_Project.models import Course
 class test_Course(TestCase):
 
     def setUp(self):
-        self.course = Course("CompSci", 150, "Survey of Computer Science")
+        self.course = Course(name = "CompSci", id = 150, departament="Survey of Computer Science")
 
     #Tests for setName
     def test_SetName(self):

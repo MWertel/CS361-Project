@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from .models import Account, Supervisor, Instructor, TA
+from CS361_Project.models import Account, Supervisor, Instructor, TA
 
 
 class DefaultLoginTests(TestCase):
