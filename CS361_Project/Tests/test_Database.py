@@ -24,21 +24,21 @@ class DatabaseSupervisortests(TestCase):
 
     def setUp(self):
         account = Account(id=1, username="Steve", password="12345", role="Supervisor",name="Steve", email="steve@uwm.edu", telephone="(+1)111-222-3333",address="2 Street")
-        supervisor = Supervisor(id=account)
+        supervisor = Supervisor(supervisorAccount=account)
         supervisor.save()
         account.save()
 
         account = Account(id=2, username="James", password="23456", role="Supervisor", name="james", email="james@uwm.edu", telephone="(+1)111-223-4334",address="3 Street")
-        supervisor = Supervisor(id=account)
+        supervisor = Supervisor(supervisorAccount=account)
         supervisor.save()
         account.save()
 
     def testQuery(self):
         supervisor1 = list(Supervisor.objects.filter(id=1))
         supervisor2 = list(Supervisor.objects.filter(id=2))
-        print(supervisor1)
-        account1 = list(Account.objects.filter(id = supervisor1[0].id.id))
-        account2 = list(Account.objects.filter(id=supervisor2[0].id.id))
+
+        account1 = list(Account.objects.filter(id = supervisor1[0].supervisorAccount.id))
+        account2 = list(Account.objects.filter(id = supervisor2[0].supervisorAccount.id))
 
         self.assertEqual(account1[0].email, "steve@uwm.edu")
         self.assertEqual(account2[0].email, "james@uwm.edu")
@@ -57,19 +57,19 @@ class DatabaseInstructorTests(TestCase):
     user = None
     def setUp(self):
         account = Account(id = 1, username = "James", password = "12345", role = "Instructor",name = "James",email = "james@uwm.edu",telephone = "(+1)111-222-3333",address = "2 Street")
-        instructor = Instructor(id= account)
+        instructor = Instructor(instructorAccount = account)
         account.save()
         instructor.save()
 
 
         account = Account(id=2, username="Michael", password="23456", role="Instructor", name="Michael", email="michael@uwm.edu", telephone="(+1)111-222-3333",address="2 Street")
-        instructor = Instructor(id=account)
+        instructor = Instructor(instructorAccount = account)
 
         account.save()
         instructor.save()
 
         account = Account(id=3, username="Steve", password="23456", role="Supervisor", name="Steve", email="steve@uwm.edu", telephone="(+1)111-222-3333",address="3 Street")
-        supervisor = Supervisor(id=account)
+        supervisor = Supervisor(supervisorAccount = account)
         supervisor.save()
         account.save()
 
@@ -79,8 +79,8 @@ class DatabaseInstructorTests(TestCase):
         instructor2 = list(Instructor.objects.filter(id = 2))
 
         #Get the values in the Account Table
-        account1 = list(Account.objects.filter(id = instructor1[0].id.id))
-        account2 = list(Account.objects.filter(id=instructor2[0].id.id))
+        account1 = list(Account.objects.filter(id = instructor1[0].instructorAccount.id))
+        account2 = list(Account.objects.filter(id=instructor2[0].instructorAccount.id))
 
         self.assertEqual(account1[0].email, "james@uwm.edu")
         self.assertEqual(account2[0].email, "michael@uwm.edu")
@@ -106,8 +106,8 @@ class DatabaseInstructorTests(TestCase):
         instructor1 = list(Instructor.objects.filter(id = a1.id))
         instructor2 = list(Instructor.objects.filter(id = a2.id))
 
-        account1 = list(Account.objects.filter(id = instructor1[0].id.id))
-        account2 = list(Account.objects.filter(id=instructor2[0].id.id))
+        account1 = list(Account.objects.filter(id = instructor1[0].instructorAccount.id))
+        account2 = list(Account.objects.filter(id=instructor2[0].instructorAccount.id))
 
         self.assertEqual(account1[0].name, "James")
         self.assertEqual(account2[0].name, "Michael")
@@ -116,19 +116,19 @@ class DatabaseTATests(TestCase):
     user = None
     def setUp(self):
         account = Account(id = 1, username = "Eric", password = "12345", role = "TA",name = "Eric",email = "eric@uwm.edu",telephone = "(+1)111-222-3333",address = "2 Street")
-        ta = TA(id= account)
+        ta = TA(TAAccount= account)
         account.save()
         ta.save()
 
 
         account = Account(id=2, username="Kyle", password="23456", role="TA", name="Kyle", email="kyle@uwm.edu", telephone="(+1)111-222-3333",address="2 Street")
-        ta = TA(id=account)
+        ta = TA(TAAccount=account)
 
         account.save()
         ta.save()
 
         account = Account(id=3, username="Steve", password="23456", role="Supervisor", name="Steve", email="steve@uwm.edu", telephone="(+1)111-222-3333",address="3 Street")
-        supervisor = Supervisor(id=account)
+        supervisor = Supervisor(supervisorAccount=account)
         supervisor.save()
         account.save()
 
@@ -136,8 +136,8 @@ class DatabaseTATests(TestCase):
         ta1 = list(TA.objects.filter(id = 1))
         ta2 = list(TA.objects.filter(id = 2))
 
-        account1 = list(Account.objects.filter(id = ta1[0].id.id))
-        account2 = list(Account.objects.filter(id=ta2[0].id.id))
+        account1 = list(Account.objects.filter(id = ta1[0].TAAccount.id))
+        account2 = list(Account.objects.filter(id=ta2[0].TAAccount.id))
 
         self.assertEqual(account1[0].email, "eric@uwm.edu")
         self.assertEqual(account2[0].email, "kyle@uwm.edu")
@@ -160,10 +160,10 @@ class DatabaseTATests(TestCase):
         a1 = accounts[0]
         a2 = accounts[1]
 
-        ta1 = list(TA.objects.filter(id = a1))
-        ta2 = list(TA.objects.filter(id = a2))
+        ta1 = list(TA.objects.filter(TAAccount = a1))
+        ta2 = list(TA.objects.filter(TAAccount = a2))
 
 
 
-        self.assertEqual(ta1[0].id.id, a1.id)
-        self.assertEqual(ta2[0].id.id,a2.id)
+        self.assertEqual(ta1[0].TAAccount.id, a1.id)
+        self.assertEqual(ta2[0].TAAccount.id,a2.id)

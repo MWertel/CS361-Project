@@ -12,7 +12,7 @@ class Account(models.Model):
     address = models.CharField(max_length = 40, null= True)
 
 class Supervisor(models.Model):
-    id = models.OneToOneField("Account", primary_key= True, on_delete=models.CASCADE)
+    supervisorAccount = models.ForeignKey("Account", on_delete=models.CASCADE, default=None)
 
     def createCourse(self, department, courseNum, courseName):
         pass
@@ -24,12 +24,12 @@ class Supervisor(models.Model):
         pass
 
 class Instructor(models.Model):
-    id = models.OneToOneField("Account",primary_key = True, on_delete = models.CASCADE)
+    instructorAccount = models.ForeignKey("Account", on_delete = models.CASCADE, default=None)
     course = models.ForeignKey("Course", on_delete= models.SET_NULL, null= True)
     labSection = models.ForeignKey("LabSection",on_delete= models.SET_NULL, null= True)
 
 class TA(models.Model):
-    id = models.OneToOneField("Account",primary_key = True, on_delete = models.CASCADE)
+    TAAccount = models.ForeignKey("Account", on_delete = models.CASCADE, default=None)
     course = models.ForeignKey("Course", on_delete= models.SET_NULL, null= True)
     labSection = models.ForeignKey("LabSection",on_delete= models.SET_NULL, null= True)
 
