@@ -28,17 +28,19 @@ class Login(View):
         # elif user.role == TA
         # return redirect("/ta/")
 
+
 class SupCreateAccounts(View):
 
-    #write functions here
-    #write Tests in Tests
-    def setName(self):
+    def __init__(self, name):
         pass
 
-    def setEmail(self):
+    def setName(self, other):
         pass
 
-    def setID(self):
+    def setEmail(self, other):
+        pass
+
+    def setID(self, other):
         pass
 
     def setRole(self, other):
@@ -50,21 +52,24 @@ class SupCreateAccounts(View):
     def setAddress(self, other):
         pass
 
+
 class SupEditAccounts(View):
-
-    def changeName(self, other):
+    def __init__(self, account):
         pass
 
-    def changeEmail(self, other):
+    def changeName(self, other, change):
         pass
 
-    def changeID(self, other):
+    def changeEmail(self, other, change):
         pass
 
-    def changeRole(self, other):
+    def changeID(self, other, change):
         pass
 
-    def changePhoneNum(self, other):
+    def changeRole(self, other, change):
+        pass
+
+    def changePhoneNum(self, other, change):
         pass
 
     def changeAddress(self, other):

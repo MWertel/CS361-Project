@@ -1,7 +1,7 @@
 import unittest
 
-from views import SupCreateAccounts
-from views import SupEditAccounts
+from .views import SupCreateAccounts
+from .views import SupEditAccounts
 from django.test import TestCase, Client
 from .models import Account, Supervisor
 
@@ -24,7 +24,7 @@ class DatabaseAccountTests(TestCase):
         self.assertEqual(account2[0].username, "James")
 
 
-class DatabaseSupervisortests(TestCase):
+class DatabaseSupervisorTests(TestCase):
     user = None
 
     def setUp(self):
@@ -63,59 +63,68 @@ class DatabaseSupervisortests(TestCase):
 class SupCreateAccount(unittest.TestCase):
     def testNullName(self):
         with self.assertRaises(ValueError, msg="Null value fails raise ValueError"):
-            a = SupCreateAccounts.setName();
+            a = SupCreateAccounts(" ")
+            a.setName(" ")
 
     def testInvalidName(self):
-        with self.assertRaises(TypeError, msg="Name of letters fails to raise ValueError"):
-            a = SupCreateAccounts.setName(1, "test")
+        with self.assertRaises(TypeError, msg="Name of numbers fails to raise ValueError"):
+            a = SupCreateAccounts(1)
+            a.setName(1)
 
     def testSetEmail(self):
         a = SupCreateAccounts("John Doe")
-        self.assertEqual(a.setEmail("john.doe@uwm.edu"))
+        self.assertEqual("john.doe@uwm.edu", a.setEmail("john.doe@uwm.edu"))
 
     def testSetID(self):
         a = SupCreateAccounts("John Doe")
-        self.assertEqual(a.setID("John Doe", 1))
+        self.assertEqual(1, a.setID(1))
 
     def testSetRole(self):
-        a = SupCreateAccounts("John Doe", "instructor")
-        self.assertEqual(a.setRole("John Doe", "Instructor"))
+        a = SupCreateAccounts("John Doe")
+        self.assertEqual("Instructor", a.setRole("Instructor"))
 
     def testSetPhone(self):
-        a = SupCreateAccounts("John Doe", 5558675309)
-        self.assertEqual(a.setPhoneNum("John Doe", 5558675309))
+        a = SupCreateAccounts("John Doe")
+        self.assertEqual("5558675309", a.setPhoneNum(5558675309))
 
     def testSetAddress(self):
-        a = SupCreateAccounts("John Doe", "1234 test ave.")
-        self.assertEqual(a.setAddress("John Doe", "1234 test ave."))
+        a = SupCreateAccounts("John Doe")
+        self.assertEqual("1234 test ave.", a.setAddress("1234 test ave."))
 
     # Tests for Supervisor editing Accounts
+
+
 class SupEditAccount(unittest.TestCase):
+
+    def setUp(self):
+        self.account = Account(id=2, username="JohnD", password="12345", role="Supervisor", name="John",
+                          email="john.deo@uwm.edu", telephone="(+1)111-222-3333", address="2 Street")
+        self.account.save()
 
     def testNullName(self):
         with self.assertRaises(ValueError, msg="Null value fails raise ValueError"):
             a = SupEditAccounts.changeName();
 
     def testInvalidName(self):
-        with self.assertRaises(TypeError, msg="Name of letters fails to raise ValueError"):
+        with self.assertRaises(TypeError, msg="Name of Numbers fails to raise ValueError"):
             a = SupEditAccounts.changeName("John Doe", 123);
 
     def testChangeEmail(self):
-        a = SupEditAccounts("John Doe")
-        self.assertEqual(a.changeEmail("john.deo@uwm.edu", "john.doe@uwm.edu"))
+        a = SupEditAccounts(self.account)
+        self.assertEqual("john.doe@uwm.edu", a.changeEmail("john.doe@uwm.edu"))
 
     def testChangeID(self):
-        a = SupEditAccounts("John Doe")
-        self.assertEqual(a.changeID(2, 1))
+        a = SupEditAccounts(self.account)
+        self.assertEqual(1, a.changeID(1))
 
     def testChangeRole(self):
-        a = SupEditAccounts("John Doe", "instructor")
-        self.assertEqual(a.changeRole("TA", "Instructor"))
+        a = SupEditAccounts(self.account)
+        self.assertEqual("Instructor", a.changeRole("Instructor"))
 
     def testChangePhone(self):
-        a = SupEditAccounts("John Doe", 5558675309)
-        self.assertEqual(a.changePhoneNum(5551234567, 5558675309))
+        a = SupEditAccounts(self.account)
+        self.assertEqual(5558675309, a.changePhoneNum(5558675309))
 
     def testChangeAddress(self):
-        a = SupEditAccounts("John Doe", "1234 test ave.")
-        self.assertEqual(a.changeAddress("change me", "1234 test ave."))
+        a = SupEditAccounts(self.account)
+        self.assertEqual("1234 test ave.", a.changeAddress("1234 test ave."))
