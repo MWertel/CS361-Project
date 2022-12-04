@@ -50,7 +50,7 @@ class Course(models.Model):
 ##        self.courseNum = courseNum
 ##        self.name = name
 
-    def __str__(self):
+    def str(self):
         pass
 
     def setName(self, name):
@@ -70,5 +70,6 @@ class Course(models.Model):
 
     def setDepartment(self, department):
         pass
-
-
+        
+    def editCourse(self, department, courseNum):
+        pass
