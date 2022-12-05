@@ -1,0 +1,64 @@
+/* Outter Box */
+.loginBox{
+    position: absolute;
+    display: grid;
+    width: 350px;
+    border: 1px solid black;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+/* Outter Box Text */
+.loginBox h1{
+    margin-left: 15px;
+    margin-bottom: -10px;
+    margin-top: 0;
+}
+
+/* Margin On The Entire Form */
+.loginForm{
+    margin: 10px;
+}
+
+/* Input Box Green When Focus */
+
+.loginBox .loginForm input:focus {
+    outline: none;
+    border: 1px solid lightgreen;
+}
+
+/* Text Input Box */
+.loginBox .loginForm input{
+    border: 1px solid black;
+    width : 300px;
+    padding: 10px;
+    margin: 5px;
+}
+
+/* Text Input Place Holder*/
+.loginBox .loginForm input::placeholder{
+    opacity: 50%;
+    text-align: left;
+}
+
+/* Log in Button */
+.loginBox .loginForm button{
+    position: relative;
+    margin-left : 100px;
+    border: 1px solid black;
+    background-color: transparent;
+    text-align: center;
+    margin-block: 5px;
+    padding: 10px 50px;
+}
+
+/*Error Message*/
+.errorResponse{
+    text-align: center;
+    color: red;
+    font-size:16px;
+    font-weight: bold;
+}

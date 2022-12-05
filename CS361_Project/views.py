@@ -1,33 +1,39 @@
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
 from django.views import View
-from .models import Account, Supervisor
-
+from .models import Account, Supervisor, Instructor, TA
 
 # Create your views here.
 
 class Login(View):
     def get(self, request):
-        return render(request, "login.html", {})
+        return render(request, "login.html")
 
-    # Have not implemented redirect (Waiting for redirect necessary html)
     def post(self, request):
-        wrongPassword = False
+        Username = request.POST.get('username')
+        Password = request.POST.get('password')
         try:
-            user = Account.objects.get(username=request.POST['Username'])
-            wrongPassword = (user.password != request.POST['Password'])
-        except Account.DoesNotExist:
-            return render(request, "login.html", {"error": "User doesn't exist"})
-        if wrongPassword:
-            return render(request, "login.html", {"error": "Incorrect password"})
-        # else . . . -> Redirect.
-        # Pseudo Codes
-        # user.role == Supervisor:
-        # return redirect("/admin/")
-        # elif user.role == Instructor
-        # return redirect("/instructor/")
-        # elif user.role == TA
-        # return redirect("/ta/")
+            user = Account.objects.get(username=Username)
+        except:
+            return render(request, "login.html", {"error": "User does not exist"})
+        user = authenticate(request, username=Username, password=Password)
+        if user is not None:
+            login(request, user)
+            return redirect('home/')
+        else:
+            return render(request, "login.html", {"error": "Incorrect Password"})
 
+
+class Home(LoginRequiredMixin, View):
+    login_url = '/'
+    redirect_field_name = 'login'
+
+    def get(self, request):
+        return render(request, "Home.html")
+
+    def post(self, request):
+        pass
 
 class SupCreateAccounts(View):
 
