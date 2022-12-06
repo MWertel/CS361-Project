@@ -23,27 +23,29 @@
     margin: 10px;
 }
 
-/* Input Box Green When Focus */
-
-.loginBox .loginForm input:focus {
-    outline: none;
-    border: 1px solid lightgreen;
-}
-
 /* Text Input Box */
-.loginBox .loginForm input{
-    border: 1px solid black;
+.inputBox{
     width : 300px;
     padding: 10px;
     margin: 5px;
 }
 
+.validInputBox{
+    border: 1px solid black;
+}
+.invalidInputBox{
+    border: 1px solid red;
+}
+/* Input Box Green When Focus */
+.inputBox:focus{
+    outline: none;
+    border: 1px solid lightgreen;
+}
 /* Text Input Place Holder*/
 .loginBox .loginForm input::placeholder{
     opacity: 50%;
     text-align: left;
 }
-
 /* Log in Button */
 .loginBox .loginForm button{
     position: relative;
@@ -54,11 +56,17 @@
     margin-block: 5px;
     padding: 10px 50px;
 }
-
 /*Error Message*/
-.errorResponse{
+.errorResponse {
     text-align: center;
-    color: red;
-    font-size:16px;
+    font-size: 16px;
     font-weight: bold;
+}
+
+/*Variation!*/
+.failedError{
+    color:red;
+}
+.successError{
+    color:lightgreen;
 }
