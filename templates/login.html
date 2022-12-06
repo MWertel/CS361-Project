@@ -21,13 +21,13 @@
      -->
     <h1>LOGIN PAGE</h1>
     <form class = "loginForm" target="_self" action = "/" method = "post"  >{%csrf_token%}
-        <input type="text" id="username" name = 'username' placeholder = "Username">
-        <input type="password" id="password" name = 'password' placeholder = "Password">
+        <input class = "inputBox {{ inputCSS }}" type="text" id="username" name = 'username' placeholder = "Username">
+        <input class = "inputBox {{ inputCSS }}" type="password" id="password" name = 'password' placeholder = "Password">
         <!--TODO: onclick: submit the username and password to verify if it's valid.-->
         <button type="submit">Login</button>
     </form>
     {% if error %}
-        <span class = "errorResponse">
+        <span class = "errorResponse {{ errorCSS }}">
             {{ error }}
         </span>
     {% endif %}
