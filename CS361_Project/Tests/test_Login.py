@@ -6,7 +6,9 @@ from CS361_Project.models import Account, Supervisor, Instructor, TA
 class DefaultLoginTests(TestCase):
 
     def setUp(self):
-        account = Account(id=1, username="Dan", password="123456", role="Supervisor")
+        account = Account(id=1, username="Dan", password="123456", role="Supervisor", name="Dan Le",
+                          email="danhcle@uwm.edu", telephone="111-111-111",
+                          address="123 Street")
         account.save()
 
         user = User.objects.create(username="Dan")
@@ -25,7 +27,6 @@ class DefaultLoginTests(TestCase):
         response = client.post('/', {'username': 'Dan', 'password': "12345"})
         message = response.context['error']
         self.assertEqual("Incorrect Password", message)
-
 
     # Usage of login() from Django Authentication -> Required dummy account.
     def testFailedLogin(self):
@@ -56,4 +57,3 @@ class DefaultLoginTests(TestCase):
         self.assertEqual(301, status_code)
         # Current page. There isn't any "previous" page.
         self.assertURLEqual('/home/', last_url)
-

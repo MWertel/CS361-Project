@@ -3,7 +3,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Account, Supervisor, Instructor, TA
-
 # Create your views here.
 
 class Login(View):
@@ -27,7 +26,6 @@ class Login(View):
 
 class Home(LoginRequiredMixin, View):
     login_url = '/'
-    redirect_field_name = 'login'
 
     def get(self, request):
         return render(request, "Home.html")
@@ -35,7 +33,8 @@ class Home(LoginRequiredMixin, View):
     def post(self, request):
         pass
 
-class SupCreateAccounts(View):
+
+class SupCreateAccounts(LoginRequiredMixin, View):
 
     def __init__(self, name):
         pass
@@ -59,7 +58,7 @@ class SupCreateAccounts(View):
         pass
 
 
-class SupEditAccounts(View):
+class SupEditAccounts(LoginRequiredMixin, View):
     def __init__(self, account):
         pass
 
@@ -79,4 +78,46 @@ class SupEditAccounts(View):
         pass
 
     def changeAddress(self, other):
+        pass
+
+
+class ManageAccounts(LoginRequiredMixin, View):
+    login_url = '/'
+    def get(self, request):
+        return render(request, 'Accounts/Manage.html')
+
+    def post(self, request):
+        pass
+
+class Notification(LoginRequiredMixin, View):
+    login_url = '/'
+    def get(self, request):
+        return render(request, 'NotificationForm.html')
+
+    def post(self, request):
+        pass
+
+
+class ManageCourse(LoginRequiredMixin,View):
+    login_url = '/'
+    def get(self, request):
+        return render(request, 'ManageCourse.html')
+
+    def post(self, request):
+        pass
+
+class Assigns(LoginRequiredMixin,View):
+    login_url = '/'
+    def get(self, request):
+        return render(request, 'Assign.html')
+
+    def post(self, request):
+        pass
+
+class Database(LoginRequiredMixin,View):
+    login_url = '/'
+    def get(self, request):
+        return render(request, 'ViewDatabase.html')
+
+    def post(self, request):
         pass

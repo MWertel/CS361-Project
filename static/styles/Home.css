@@ -47,11 +47,13 @@
     border: 2px solid green;
 }
 
+.buttonBox a{
+
+}
+
 .buttonText{
     opacity: 70%;
     width: fit-content;
     white-space: nowrap;
     font-size: 0.9rem;
 }
-
-

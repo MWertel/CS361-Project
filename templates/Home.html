@@ -17,11 +17,23 @@
 
         <div class ='buttonBox'>
             {# Change the type of button here: #}
-            <button class = 'buttonText'>Create Notification</button>
-            <button class = 'buttonText'>Manage Accounts</button>
-            <button class = 'buttonText'>Manage Courses</button>
-            <button class = 'buttonText'>Assign TAs/Instructors</button>
-            <button class = 'buttonText'>View Database</button>
+            <button class = 'buttonText'>
+                <a href="{% url 'create_notification' %}">Create Notification</a>
+            </button>
+
+            <button type="button" class = "buttonText">
+                <a href="{% url 'manage_account' %}">Manage Accounts</a>
+            </button>
+            <button class = 'buttonText'>
+                <a href="{% url 'course' %}">Manage Courses</a>
+            </button>
+
+            <button class = 'buttonText' >
+                <a href="{% url 'assign_person' %}">Assign TAs/Instructors</a>
+                </button>
+            <button class = 'buttonText' >
+                <a href="{% url 'view_data' %}">View Database</a>
+            </button>
             <button class = 'buttonText'>Logout</button>
         </div>
     </div>
