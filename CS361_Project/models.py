@@ -3,9 +3,9 @@ from django.db import models
 
 class Account(models.Model):
     id = models.IntegerField(unique = True, primary_key= True)
-    username = models.CharField(max_length=30)
+    username = models.CharField(max_length=30, unique = True)
     password = models.CharField(max_length = 30)
-    role = models.CharField(max_length=30, null= True)
+    role = models.CharField(max_length=30) #username, password and role should not be null
     name = models.CharField(max_length= 30, null= True)
     email = models.CharField(max_length= 30, null= True)
     telephone = models.CharField(max_length= 20, null= True)

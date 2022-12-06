@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Account, Supervisor, Instructor, TA
+import random as rand
 
 # Create your views here.
 
@@ -35,48 +36,140 @@ class Home(LoginRequiredMixin, View):
     def post(self, request):
         pass
 
-class SupCreateAccounts(View):
+class SupCreateAccounts(LoginRequiredMixin, View):
 
-    def __init__(self, name):
-        pass
-
+    """
     def setName(self, other):
-        pass
+        self.account.name = other
 
     def setEmail(self, other):
-        pass
+        self.account.email = other
+    """
 
-    def setID(self, other):
-        pass
+    def generateID(self):
 
+        #We assign ID in a first come, first serve method, checking all the existing IDs just to make sure that
+        #none of the IDs are repeated
+        accounts = list(Account.objects.all())
+        idList = []
+
+        for l in accounts:
+            idList.append(l.id)
+
+        #IDs are randomly assigned, should have way more numbers than expected users
+        i = rand.randint(1,5000000)
+        flag = True
+        while(flag):
+            if i not in idList:
+                flag = False
+            i += rand.randint(1,5000000)
+        #Returns the unique ID (Cannot be done as a global variable that keep being added because an ID might be deleted=
+        return i
+
+
+    """
     def setRole(self, other):
-        pass
+        self.account.role = other
 
     def setPhoneNum(self, other):
-        pass
+        self.account.telephone = other
 
     def setAddress(self, other):
+        self.account.telephone = other
+
+
+    def setUsername(self, other):
         pass
+
+    def setPassword(self,other):
+        pass
+
+    def saveAccount(self,other):
+        pass 
+    """
 
 
 class SupEditAccounts(View):
     def __init__(self, account):
-        pass
+        self.account = account
 
-    def changeName(self, other, change):
-        pass
+    def changeName(self, change = "Null"):
+        if type(change) != str:
+            raise TypeError("Name of Numbers fails to raise ValueError")
 
-    def changeEmail(self, other, change):
-        pass
 
-    def changeID(self, other, change):
-        pass
+        if change == "Null":
+            raise ValueError("Null value fails raise ValueError")
 
-    def changeRole(self, other, change):
-        pass
+        self.account.name = change
+        self.account.save()
 
-    def changePhoneNum(self, other, change):
-        pass
+    def changeEmail(self, change = "Null"):
+        if type(change) != str:
+            raise TypeError("Name of Numbers fails to raise ValueError")
 
-    def changeAddress(self, other):
-        pass
+        if change == "Null":
+            raise ValueError("Null value fails raise ValueError")
+
+        self.account.email = change
+        self.account.save()
+
+    def changeRole(self, change = "Null"):
+        if type(change) != str:
+            raise TypeError("Name of Numbers fails to raise ValueError")
+
+        if change == "Null":
+            raise ValueError("Null value fails raise ValueError")
+
+        self.account.role = change
+        self.account.save()
+
+    def changePhoneNum(self, change = "Null"):
+        if type(change) != str:
+            raise TypeError("Name of Numbers fails to raise ValueError")
+
+        if change == "Null":
+            raise ValueError("Null value fails raise ValueError")
+
+        self.account.telephone = change
+        self.account.save()
+
+    def changeAddress(self, other = "Null"):
+        if type(other) != str:
+            raise TypeError("Name of Numbers fails to raise ValueError")
+
+        if other == "Null":
+            raise ValueError("Null value fails raise ValueError")
+
+        self.account.address = other
+        self.account.save()
+
+    def changeUsername(self, other = "Null"):
+        if type(other) != str:
+            raise TypeError("Name of Numbers fails to raise ValueError")
+
+        if other == "Null":
+            raise ValueError("Null value fails raise ValueError")
+
+        accounts = list(Account.objects.all())
+        usernameList = []
+
+        for i in accounts:
+            usernameList.append(i.username)
+
+        #if other is not within username list, make the change
+        if other not in usernameList:
+            self.account.username = other
+            self.account.save()
+
+    def changePassword(self,other = "Null"):
+        if type(other) != str:
+            raise TypeError("Name of Numbers fails to raise ValueError")
+
+        if other == "Null":
+            raise ValueError("Null value fails raise ValueError")
+
+        self.account.password = other
+        self.account.save()
+
+
