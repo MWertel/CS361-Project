@@ -48,7 +48,7 @@
     border: 2px solid green;
 }
 
-.buttonBox a:visited, .buttonBox a:link, .buttonBox a:hover, .buttonBox a:active{
+.buttonBox .buttonBox a:hover,.buttonBox a:active, .buttonBox a:link ,a:visited{
     text-decoration: none;
     color: black;
 }
