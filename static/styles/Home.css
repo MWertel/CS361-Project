@@ -9,7 +9,7 @@
     display:block;
     margin-bottom: 0;
     margin-top : 0;
-    font-family: Andale Mono, monospace;
+    font-family: Serif, "Times New Roman", serif;
     font-size: 2rem;
 }
 
@@ -44,11 +44,13 @@
 }
 
 .buttonBox button:hover{
+    cursor: pointer;
     border: 2px solid green;
 }
 
-.buttonBox a{
-
+.buttonBox a:visited, .buttonBox a:link, .buttonBox a:hover, .buttonBox a:active{
+    text-decoration: none;
+    color: black;
 }
 
 .buttonText{
@@ -56,4 +58,16 @@
     width: fit-content;
     white-space: nowrap;
     font-size: 0.9rem;
+}
+
+.testText{
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.testBannerContent{
+    display: block;
+    text-align: center;
+    font-size: 36px;
+    margin-top: 70px;
 }
