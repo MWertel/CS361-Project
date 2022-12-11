@@ -47,53 +47,6 @@ class Home(View):
 
 #     No Post yet.
 
-class SupCreateAccounts(View):
-
-    def __init__(self, name):
-        pass
-
-    def setName(self, other):
-        pass
-
-    def setEmail(self, other):
-        pass
-
-    def setID(self, other):
-        pass
-
-    def setRole(self, other):
-        pass
-
-    def setPhoneNum(self, other):
-        pass
-
-    def setAddress(self, other):
-        pass
-
-
-class SupEditAccounts(View):
-    def __init__(self, account):
-        pass
-
-    def changeName(self, other, change):
-        pass
-
-    def changeEmail(self, other, change):
-        pass
-
-    def changeID(self, other, change):
-        pass
-
-    def changeRole(self, other, change):
-        pass
-
-    def changePhoneNum(self, other, change):
-        pass
-
-    def changeAddress(self, other):
-        pass
-
-
 class ManageAccounts(View):
     def get(self, request):
         return render(request, 'Accounts/Manage.html')
