@@ -5,7 +5,7 @@ class Account(models.Model):
     id = models.IntegerField(unique = True, primary_key= True)
     username = models.CharField(max_length=30, unique = True)
     password = models.CharField(max_length = 30)
-    role = models.CharField(max_length=30) #username, password and role should not be null
+    role = models.CharField(max_length=30, null=True) #username, password and role should not be null
     name = models.CharField(max_length= 30, null= True)
     email = models.CharField(max_length= 30, null= True)
     telephone = models.CharField(max_length= 20, null= True)
@@ -36,40 +36,15 @@ class TA(models.Model):
 class LabSection(models.Model):
     id = models.IntegerField(primary_key = True)
     name = models.CharField(max_length = 50)
-    departament = models.CharField(max_length = 30)
+    department = models.CharField(max_length = 30)
 
 
 class Course(models.Model):
     id = models.IntegerField(primary_key = True)
     name = models.CharField(max_length = 50)
-    departament = models.CharField(max_length=30)
+    department = models.CharField(max_length=30)
 
-#Not necessary, just use the models system to create and save on the Supervisor, look at the Database tests for ideas
-##    def __init__(self, department, courseNum, name):
-##       self.department = department
-##        self.courseNum = courseNum
-##        self.name = name
-
-    def str(self):
-        pass
-
-    def setName(self, name):
-        pass
-
-    def getName(self):
-        pass
-
-    def setCourseNum(self, courseNum):
-        pass
-
-    def getCourseNum(self):
-        pass
-
-    def getDepartment(self):
-        pass
-
-    def setDepartment(self, department):
-        pass
-        
-    def editCourse(self, department, courseNum):
-        pass
+#Link Table
+class Course_LabSection(models.Model):
+    course = models.ForeignKey("Course",on_delete=models.CASCADE)
+    labSection = models.ForeignKey("LabSection", on_delete=models.CASCADE)

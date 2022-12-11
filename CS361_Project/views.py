@@ -1,7 +1,8 @@
 from django.middleware.csrf import rotate_token
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Account, Supervisor, Instructor, TA
+from .models import Account, Supervisor, Instructor, TA, Course, LabSection
+from .functions import generateID
 
 
 # Create your views here.
@@ -55,7 +56,7 @@ class SupEditAccounts(View):
     pass
 
 
-class ManageAccounts(Authenticate, View):
+class ManageAccounts(View):
     def get(self, request):
         return render(request, 'Accounts/Manage.html')
 
@@ -89,7 +90,14 @@ class ManageCourse(View):
 class CreateCourse(View):
     # Only post method.
     def post(self, request):
-        return render(request, 'Accounts/Manage.html')
+        courseName = request.POST.get("name")
+        department = request.POST.get("department")
+        id = generateID(courseName)
+
+        newCourse = Course(id = id, department= department, name=courseName)
+
+        newCourse.save()
+        return render(request, 'ManageCourse.html')
 
 
 class Assigns(View):

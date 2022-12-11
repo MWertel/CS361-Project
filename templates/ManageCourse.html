@@ -26,6 +26,7 @@
             {% if request.session.action == 'Create' %}
             {# *DEFAULT* Create Form on Button Clicked #}
             <form class = "createBox" action = '/course/createCourse/' method = 'post'>
+                {% csrf_token %}
                 <label for = 'course_name'>Course Name:</label>
                 <input name = 'name' type = 'text' id = 'course_name' placeholder= "Name" maxlength = '50'>
                 <label for = 'department_name'>Department Name:</label>
