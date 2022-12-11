@@ -47,7 +47,15 @@ class Home(View):
 
 #     No Post yet.
 
-class ManageAccounts(View):
+class SupCreateAccounts(View):
+    pass
+
+
+class SupEditAccounts(View):
+    pass
+
+
+class ManageAccounts(Authenticate, View):
     def get(self, request):
         return render(request, 'Accounts/Manage.html')
 
@@ -68,7 +76,20 @@ class ManageCourse(View):
         return render(request, 'ManageCourse.html')
 
     def post(self, request):
-        pass
+        request.session['action'] = None
+        if request.POST.get('create_button') is not None:
+            request.session['action'] = 'Create'
+        elif request.POST.get('edit_button') is not None:
+            request.session['action'] = "Edit"
+        else:
+            request.session['action'] = "Delete"
+        return render(request, 'ManageCourse.html')
+
+
+class CreateCourse(View):
+    # Only post method.
+    def post(self, request):
+        return render(request, 'Accounts/Manage.html')
 
 
 class Assigns(View):
