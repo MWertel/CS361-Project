@@ -39,8 +39,10 @@ class Login(View):
 
 class Home(View):
     def get(self, request):
+        accounts = list(Account.objects.all())
+
         if request.session.get('is_authenticate'):
-            return render(request, "Home.html", )
+            return render(request, "Home.html", {"accounts": accounts})
         else:
             return render(request, "login.html")
 
