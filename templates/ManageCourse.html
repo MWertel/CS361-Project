@@ -1,10 +1,55 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Course</title>
+    <link rel = "stylesheet" href = "{% static 'styles/Course.css' %} ? {% now 'U' %}" type = 'text/css'>
 </head>
 <body>
+    <div class = 'container'>
 
+        <div class = 'buttonBox'>
+            <form action = '/course/' method = 'post'> {% csrf_token %}
+                <a>
+                    <button class = 'buttonStyle' type = 'submit' name ='create_button'>Create</button>
+                </a>
+                <a>
+                    <button class = 'buttonStyle' type = 'submit' name ='edit_button'>Edit</button>
+                </a>
+                <a>
+                    <button class = 'buttonStyle' type = 'submit' name ='delete_button'>Delete</button>
+                </a>
+            </form>
+        </div>
+        <div class = 'formBox'>
+            {% if request.session.action == 'Create' %}
+            {# *DEFAULT* Create Form on Button Clicked #}
+            <form class = "createBox" action = '/course/createCourse/' method = 'post'>
+                {% csrf_token %}
+                <label for = 'course_name'>Course Name:</label>
+                <input name = 'name' type = 'text' id = 'course_name' placeholder= "Name" maxlength = '50'>
+                <label for = 'department_name'>Department Name:</label>
+                <input name = 'department' type = 'text' id = 'department_name' placeholder="Department" maxlength = '50'>
+                <button name = 'create' id = 'create_button' type = 'submit'>Create</button>
+            </form>
+            {% elif request.session.action == 'Edit' %}
+            {# Edit Form on Button Clicked #}
+            <form action = '/course/editCourse/' method = 'post'>
+            </form>
+
+            {% elif request.session.action == 'Delete' %}
+        {# Delete Drop Box Form on Button Clicked #}
+            <form action = '/course/deleteCourse' method = 'post'>
+            </form>
+            {% endif %}
+        </div>
+
+        {# ignored for now. #}
+        {% if request.session.is_added %}
+        <div class = 'recentBox'>
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>

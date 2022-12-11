@@ -1,7 +1,8 @@
 from django.middleware.csrf import rotate_token
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Account, Supervisor, Instructor, TA
+from .models import Account, Supervisor, Instructor, TA, Course, LabSection
+from .functions import generateID
 
 
 # Create your views here.
@@ -39,6 +40,7 @@ class Login(View):
 
 class Home(View):
     def get(self, request):
+
         accounts = list(Account.objects.all())
 
         if request.session.get('is_authenticate'):
@@ -48,6 +50,7 @@ class Home(View):
 
 
 #     No Post yet.
+
 
 class ManageAccounts(View):
     def get(self, request):
@@ -70,7 +73,27 @@ class ManageCourse(View):
         return render(request, 'ManageCourse.html')
 
     def post(self, request):
-        pass
+        request.session['action'] = None
+        if request.POST.get('create_button') is not None:
+            request.session['action'] = 'Create'
+        elif request.POST.get('edit_button') is not None:
+            request.session['action'] = "Edit"
+        else:
+            request.session['action'] = "Delete"
+        return render(request, 'ManageCourse.html')
+
+
+class CreateCourse(View):
+    # Only post method.
+    def post(self, request):
+        courseName = request.POST.get("name")
+        department = request.POST.get("department")
+        id = generateID(courseName)
+
+        newCourse = Course(id = id, department= department, name=courseName)
+
+        newCourse.save()
+        return render(request, 'ManageCourse.html')
 
 
 class Assigns(View):
