@@ -96,10 +96,46 @@ class SupEditAccounts(View):
 
 class ManageAccounts(View):
     def get(self, request):
+        request.session['action'] = None
+        return render(request, 'Accounts/Manage.html', {"validForm": 'invalid'})
+
+    def post(self, request):
+        request.session['action'] = None
+        if request.POST.get('create') is not None:
+            request.session['action'] = 'create'
+        elif request.POST.get('edit') is not None:
+            request.session['action'] = 'edit'
+        else:
+            request.session['action'] = 'delete'
+
+        return render(request, 'Accounts/Manage.html')
+
+
+class CreateAccount(View):
+
+    def get(self, request):
+        return render(request, 'Accounts/Manage.html', {"validForm": "valid"})
+
+    def post(self, request):
+        return render(request, 'Accounts/Manage.html')
+
+
+class EditAccount(View):
+
+    def get(self, request):
         return render(request, 'Accounts/Manage.html')
 
     def post(self, request):
-        pass
+        return render(request, 'Accounts/Manage.html')
+
+
+class DeleteAccount(View):
+
+    def get(self, request):
+        return render(request, 'Accounts/Manage.html')
+
+    def post(self, request):
+        return render(request, 'Accounts/Manage.html')
 
 
 class Notification(View):

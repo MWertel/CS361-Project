@@ -1,12 +1,71 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Manage</title>
+    <link rel = "stylesheet" href = "{% static 'styles/ManageAccount.css' %}?{% now 'U' %}" type = "text/css">
 </head>
-<body>
-<a href="Remove.html">Remove Account</a>
-<a href="Create.html">Create Account</a>
-<a href="Update.html">Update Account</a>
+<body class = "body">
+    <div class = "whole">
+        <div class = "buttons">
+            <form action = '/manage/' method = "post"> {% csrf_token %}
+                <a>
+                    <button class = "button" type = "submit" id = 'button' name = "create">Create</button>
+                </a>
+                <a>
+                    <button class = "button" type = "submit" id = 'button' name = "edit">Edit</button>
+                </a>
+                <a>
+                    <button class = "button" type = "submit" id = 'button' name = "delete">Delete</button>
+                </a>
+            </form>
+        </div>
+
+        <div class = "forms {{ validForm }}">
+            {% if request.session.action == 'create' %}
+                <form class = "createAccountForm" action = "/manage/createAccount/" method = "post" > {% csrf_token %}
+                    <label class = "label" for = "role">Role:</label>
+                    <select class = "roleSelect" id = "role" name = 'role'>
+                        <option value = "" disabled selected hidden>Choose Role</option>
+                        <option value = "Supervisor">Supervisor</option>
+                        <option value = "Instructor">Instructor</option>
+                        <option value = "TA">TA</option>
+                    </select>
+                    <br>
+                    <label class = "label" for="Name">Name:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Name" name = 'Name' >
+                    <br>
+                    <label class = "label" for = "Email">Email:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Email" name = 'Email'>
+                    <br>
+                    <label class = "label" id = "TelephoneLabel" for = "Telephone">Phone Number:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Telephone" name = 'Telephone'>
+                    <br>
+                    <label class = "label" id = "AddressLabel" for = "Address">Address:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Address" name = 'Address'>
+                    <br>
+                    <button type = "submit">Submit</button>
+                </form>
+            {% elif request.session.action == 'edit' %}
+                <form class = "editAccountForm" action = "/manage/editAccount/" method = "post"> {% csrf_token %}
+                    <label class = "label" for="Name">Name:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Name" name = 'Name' >
+                    <br>
+                    <button type = "submit">Submit</button>
+                </form>
+            {% elif request.session.action == 'delete' %}
+                <form class = "deleteAccountForm" action = "/manage/deleteAccount/" method = "post"> {% csrf_token %}
+                    <label class = "label" for="Name">Name:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Name" name = 'Name' >
+                    <br>
+                    <button type = "submit">Submit</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+    <button type="button" class = "homeButton" id = "button">
+        <a href="{% url 'home' %}">Return to home screen</a>
+    </button>
 </body>
 </html>
