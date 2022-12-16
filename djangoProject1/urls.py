@@ -27,6 +27,7 @@ urlpatterns = [
     path('home/', Home.as_view(), name='home'),
     path('manage/', ManageAccounts.as_view(), name='manage_account'),
     path('manage/createAccount/', CreateAccount.as_view(), name='create_account'),
+
     path('manage/editAccount/', EditAccount.as_view(), name='edit_account'),
     path('manage/deleteAccount/', DeleteAccount.as_view(), name='delete_account'),
     path('notification/', Notification.as_view(), name="create_notification"),

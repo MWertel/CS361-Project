@@ -103,6 +103,7 @@ class CreateAccount(View):
                                  address = request.POST.get("Address")
             )
             newAccount.save()
+
         return render(request, 'Accounts/Manage.html')
 
 
@@ -140,7 +141,6 @@ class EditAccount(View):
                 changeAddress(editAccount, request.POST.get("Address"))
 
             editAccount.save()
-
         return render(request, 'Accounts/Manage.html')
 
 

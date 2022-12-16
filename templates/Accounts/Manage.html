@@ -79,6 +79,7 @@
                 <form class = "deleteAccountForm" action = "/manage/deleteAccount/" method = "post"> {% csrf_token %}
                     <label class = "label" for="Username">Username:</label>
                     <input class = "input {{ inputCSS }}" type = "text" id = "Username" name = 'Username' >
+
                     <br>
                     <button type = "submit">Submit</button>
                 </form>
