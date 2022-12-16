@@ -26,6 +26,7 @@ urlpatterns = [
     path('logout/', LogOut.as_view(), name='logout'),
     path('home/', Home.as_view(), name='home'),
     path('manage/', ManageAccounts.as_view(), name='manage_account'),
+    path('manage/createAccount/', CreateAccount.as_view(), name='create_account'),
     path('notification/', Notification.as_view(), name="create_notification"),
     path('course/', ManageCourse.as_view(), name="course"),
     path('course/createCourse/', CreateCourse.as_view(), name='create_course'),
