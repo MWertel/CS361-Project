@@ -1,4 +1,5 @@
-import re
+from .models import Account, Supervisor, Instructor, TA
+import random as rand
 
 
 #This functions generates an ID based on a hash of the User's first username
@@ -37,7 +38,7 @@ def changeRole(account, change = "Null"):
     account.role = change
     account.save()
 
-def changeTelephone(account, change = "Null"):
+def changePhoneNum(account, change = "Null"):
     if type(change) != str:
         raise TypeError("Name of Numbers fails to raise ValueError")
 
@@ -58,7 +59,6 @@ def changeAddress(account, other = "Null"):
     account.save()
 
 def changePassword(account,other = "Null"):
-
     if type(other) != str:
         raise TypeError("Name of Numbers fails to raise ValueError")
 
@@ -67,20 +67,3 @@ def changePassword(account,other = "Null"):
 
     account.password = other
     account.save()
-
-
-def passwordChecker(password):
-    #Checks the password to see if matches with the requirements
-    #Returns true if so, false if not
-    #one digit
-    #one upper case
-    #one lower case
-    #at least 5 characters
-    #one special character
-    pattern = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
-    result = re.match(pattern,password)
-
-    if result != None:
-        return True
-    else:
-        return False

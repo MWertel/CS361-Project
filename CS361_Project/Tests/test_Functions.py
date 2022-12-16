@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from CS361_Project.functions import generateID, changeName,changePassword, changeRole,changeEmail,changeAddress,changeTelephone, passwordChecker
+from CS361_Project.functions import generateID, changeName,changePassword, changeRole,changeEmail,changeAddress,changePhoneNum
 from django.test import TestCase, Client
 from CS361_Project.models import Account, Supervisor
 
@@ -46,7 +46,7 @@ class TestFunctions(TestCase):
         self.assertEqual("Instructor", self.account.role)
 
     def testChangePhone(self):
-        changeTelephone(self.account,"5558675309")
+        changePhoneNum(self.account,"5558675309")
         self.assertEqual("5558675309", self.account.telephone)
 
     def testChangeAddress(self):
@@ -60,12 +60,3 @@ class TestFunctions(TestCase):
     def testInvalidPassword(self):
         with self.assertRaises(TypeError, msg="Name of Numbers fails to raise ValueError"):
             changePassword(self.account,v = [])
-
-
-    def testPasswordChecker(self):
-        self.assertTrue(passwordChecker("Te$t12345"))
-        self.assertFalse(passwordChecker("Test"))
-        self.assertFalse(passwordChecker("Test123"))
-        self.assertFalse(passwordChecker("12345"))
-        self.assertFalse(passwordChecker("test%12345"))
-        self.assertFalse(passwordChecker("Te$1"))
