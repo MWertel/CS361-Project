@@ -1,3 +1,5 @@
+from django.core import mail
+from django.test import TestCase
 import re
 
 
@@ -84,3 +86,10 @@ def passwordChecker(password):
         return True
     else:
         return False
+
+
+def sendEmail(message, sender, recipient):
+    subject = "Notification!"
+    return mail.send_mail(subject, message,
+                          sender, recipient,
+                          fail_silently=False)

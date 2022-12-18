@@ -2,7 +2,7 @@ from django.middleware.csrf import rotate_token
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Account, Supervisor, Instructor, TA, Course, LabSection
-from .functions import generateID, changeName, changePassword, changeEmail, changeAddress,changeTelephone, passwordChecker
+from .functions import generateID, changeName, changePassword, changeEmail, changeAddress,changeTelephone, passwordChecker, sendEmail
 
 
 # Create your views here.
@@ -32,11 +32,11 @@ class Login(View):
             session['is_authenticate'] = True
             session['role'] = user.role
             session['name'] = user.name
+            session['username'] = user.username
             return redirect('home/')
         else:
             return render(request, "login.html",
                           {"error": "Incorrect Password", "inputCSS": "invalidInputBox", "errorCSS": "failedError"})
-
 
 class Home(View):
     def get(self, request):
@@ -168,8 +168,14 @@ class Notification(View):
         return render(request, 'NotificationForm.html')
 
     def post(self, request):
-        recipients = request.POST.get('recipients')
+
+        recipients = request.POST.get('recipients').split(',')
         message = request.POST.get('message')
+        sender = Account.objects.get(username = request.session.get("username")).email
+        try:
+            sendEmail(message, sender, recipients)
+        except:
+            return render(request, 'NotificationForm.html')
         return render(request, 'NotificationForm.html')
 
 

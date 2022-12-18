@@ -1,8 +1,9 @@
 from django.test import TestCase, Client
-from CS361_Project.functions import generateID, changeName,changePassword, changeRole,changeEmail,changeAddress,changeTelephone, passwordChecker
+from CS361_Project.functions import generateID, changeName,changePassword, changeRole,changeEmail,changeAddress,changeTelephone, passwordChecker, sendEmail
 from django.test import TestCase, Client
 from CS361_Project.models import Account, Supervisor
-
+from django.core import mail
+from django.test import TestCase
 
 # Tests for Supervisor Creating Accounts
 
@@ -69,3 +70,13 @@ class TestFunctions(TestCase):
         self.assertFalse(passwordChecker("12345"))
         self.assertFalse(passwordChecker("test%12345"))
         self.assertFalse(passwordChecker("Te$1"))
+
+
+    def testSendEmail(self):
+        sendEmail("Cool Message that is very deep", "from@example.com", ["to@example.com"])
+        self.assertEqual(len(mail.outbox), 1)
+
+        sendEmail("Email message", "from@example.com", ["to@example.com"])
+        self.assertEqual(len(mail.outbox), 2)
+
+        self.assertEqual(mail.outbox[0].subject,"Notification!")
