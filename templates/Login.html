@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <!-- {now u} is a trick to live update CSS -->
+    <link rel="stylesheet" href="{% static 'styles/Login.css' %}?{% now 'U' %}" type="text/css">
+
+</head>
+<body>
+<img class = 'logoLogin' src = '{% static 'images/LOGO_417x385.png' %}' alt="Super-Looper">
+<div class = "loginBox">
+    <h1 class = 'loginTitle'>LOGIN</h1>
+    <div class="underLine"></div>
+    {% if error is None%}
+        <p class = 'formText welcome'>WELCOME TO SUPER-LOOPER</p>
+    {% elif error is not None%}
+        <p class = 'formText signInError'>{{ error }}</p>
+    {% endif %}
+
+    <form class = "loginForm" target="_self" action = "/" method = "post"  >{%csrf_token%}
+        <input class = "inputBox" type="text" id="username" name = 'username' placeholder = "username" maxlength="30">
+        <input class = "inputBox" type="password" id="password" name = 'password' placeholder = "password" maxlength="30">
+        <button class = 'signInButton' type="submit"><img class = 'arrowModel' src = '{% static 'images/ArrowModel_418x120.png' %}' alt="submit-arrow"></button>
+    </form>
+</div>
+</body>
+</html>

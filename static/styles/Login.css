@@ -1,72 +1,138 @@
-/* Outter Box */
+
+/*Credit : Google "Product Sans" */
+@import url('https://fonts.cdnfonts.com/css/google-sans');
+
+body{
+    background-color: #22416B;
+}
+
 .loginBox{
     position: absolute;
-    display: grid;
-    width: 350px;
-    border: 1px solid black;
-    padding: 10px;
-    top: 50%;
+    width: 960px;
+    height: 514px;
+    border-radius: 55px;
+    background-color: white;
+    top: 56%;
     left: 50%;
-    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    filter: drop-shadow(0 0 5px black);
 }
 
-/* Outter Box Text */
-.loginBox h1{
-    margin-left: 15px;
-    margin-bottom: -10px;
-    margin-top: 0;
+.loginTitle{
+    font-family: "Product Sans Black", sans-serif;
+    font-size: 45pt;
+    color: #5c8acb;
+    text-align: center;
+    margin-bottom: -12px;
+    user-select: none;
 }
 
-/* Margin On The Entire Form */
-.loginForm{
-    margin: 10px;
+.underLine{
+    height: 1px;
+    width: 200px;
+    margin: auto;
+    border-bottom: 5px solid #5c8acb;
+    border-radius: 20px;
 }
 
-/* Text Input Box */
+
 .inputBox{
-    width : 300px;
-    padding: 10px;
-    margin: 5px;
+    outline: none;
+    border: 2px solid #5c8acb;
+    border-radius: 25px;
+    font-size: 30pt;
+    font-family: "Product Sans Medium", sans-serif;
+    color: #5c8acb;
+    width : 480px;
+    height: 71px;
+    margin-top: 30px;
+    margin-left: 240px;
+    padding-left: 10px;
 }
 
-.validInputBox{
-    border: 1px solid black;
-}
-.invalidInputBox{
-    border: 1px solid red;
-}
-/* Input Box Green When Focus */
 .inputBox:focus{
-    outline: none;
-    border: 1px solid lightgreen;
+    border-bottom: 5px solid #5c8acb;
 }
 /* Text Input Place Holder*/
-.loginBox .loginForm input::placeholder{
+.inputBox::placeholder{
     opacity: 50%;
-    text-align: left;
+    color: #5c8acb;
+    text-align: center;
+    padding-top : 10px;
 }
 /* Log in Button */
-.loginBox .loginForm button{
-    position: relative;
-    margin-left : 100px;
-    border: 1px solid black;
-    background-color: transparent;
-    text-align: center;
-    margin-block: 5px;
-    padding: 10px 50px;
-}
-/*Error Message*/
-.errorResponse {
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
+.signInButton{
+    width: 240px;
+    height: 67px;
+    margin-left: 360px;
+    border: 3px solid transparent;
+    background-color: #5c8acb;
+    border-radius: 50px;
+    margin-top:28px;
+    cursor: pointer;
+
 }
 
-/*Variation!*/
-.failedError{
-    color:red;
+.signInButton:hover {
+    background: linear-gradient(#5c8acb,#5c8acb) padding-box, linear-gradient(to left, #abd781, #ad81d7) border-box;
+    background-size: 400%;
+    animation: button-movingGradient 3s infinite alternate-reverse;
 }
-.successError{
-    color:lightgreen;
+
+.arrowModel{
+    margin-top : 5px;
+    width: 84px;
+    height: auto;
+}
+.logoLogin{
+    width: 146px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right:auto;
+    animation: logo-Intro 1.2s ease forwards;
+}
+
+.formText{
+    border-right: 3px solid #5c8acb;
+    font-family: "Product Sans Light", sans-serif;
+    font-size: 18pt;
+    width: max-content;
+    margin: 12px auto -15px;
+    user-select: none;
+}
+.welcome{
+    color: #5c8acb;
+    animation: blinking_Char 0.65s step-end infinite;}
+.signInError{
+    color: #cb665c;
+    animation : blinking_Char_Error 0.65s step-end infinite;
+}
+
+@keyframes blinking_Char{
+    from,to{border-color: transparent;}
+    50%{border-color: #5c8acb}
+}
+
+@keyframes blinking_Char_Error{
+    from,to{border-color: transparent;}
+    50%{border-color: #cb665c}
+}
+
+@keyframes logo-Intro{
+    from{
+        margin-top: 1%;
+        opacity: 0;
+    }
+
+    to{
+        margin-top: 5%;
+        opacity: 100%;
+    }
+}
+
+@keyframes button-movingGradient {
+    from {background-position: left;}
+    to {background-position: right;}
+
 }
