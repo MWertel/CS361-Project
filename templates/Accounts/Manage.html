@@ -21,7 +21,7 @@
                 </a>
             </form>
         </div>
-
+        {{ error }}
         <div class = "forms {{ validForm }}">
             {% if request.session.action == 'create' %}
                 <form class = "createAccountForm" action = "/manage/createAccount/" method = "post" > {% csrf_token %}
@@ -32,6 +32,12 @@
                         <option value = "Instructor">Instructor</option>
                         <option value = "TA">TA</option>
                     </select>
+                    <br>
+                    <label class = "label" for="Username">Username:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Username" name = 'Username' >
+                    <br>
+                    <label class = "label" for="Password">Password:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Password" name = 'Password' >
                     <br>
                     <label class = "label" for="Name">Name:</label>
                     <input class = "input {{ inputCSS }}" type = "text" id = "Name" name = 'Name' >
@@ -49,15 +55,31 @@
                 </form>
             {% elif request.session.action == 'edit' %}
                 <form class = "editAccountForm" action = "/manage/editAccount/" method = "post"> {% csrf_token %}
+                    <label class = "label" for="Username">Username:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Username" name = 'Username' >
+                    <br>
+                    <label class = "label" for="Password">Password:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Password" name = 'Password' >
+                    <br>
                     <label class = "label" for="Name">Name:</label>
                     <input class = "input {{ inputCSS }}" type = "text" id = "Name" name = 'Name' >
+                    <br>
+                    <label class = "label" for = "Email">Email:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Email" name = 'Email'>
+                    <br>
+                    <label class = "label" id = "TelephoneLabel" for = "Telephone">Phone Number:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Telephone" name = 'Telephone'>
+                    <br>
+                    <label class = "label" id = "AddressLabel" for = "Address">Address:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Address" name = 'Address'>
                     <br>
                     <button type = "submit">Submit</button>
                 </form>
             {% elif request.session.action == 'delete' %}
                 <form class = "deleteAccountForm" action = "/manage/deleteAccount/" method = "post"> {% csrf_token %}
-                    <label class = "label" for="Name">Name:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Name" name = 'Name' >
+                    <label class = "label" for="Username">Username:</label>
+                    <input class = "input {{ inputCSS }}" type = "text" id = "Username" name = 'Username' >
+
                     <br>
                     <button type = "submit">Submit</button>
                 </form>

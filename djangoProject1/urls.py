@@ -18,7 +18,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import path
 
 from CS361_Project.views import Login, Home, ManageAccounts, Notification, ManageCourse, Assigns, Database, LogOut, \
-    CreateCourse
+    CreateCourse, CreateAccount, EditAccount, DeleteAccount
 
 urlpatterns = [
     # Login is the home page -> ('')
@@ -27,6 +27,9 @@ urlpatterns = [
     path('home/', Home.as_view(), name='home'),
     path('manage/', ManageAccounts.as_view(), name='manage_account'),
     path('manage/createAccount/', CreateAccount.as_view(), name='create_account'),
+
+    path('manage/editAccount/', EditAccount.as_view(), name='edit_account'),
+    path('manage/deleteAccount/', DeleteAccount.as_view(), name='delete_account'),
     path('notification/', Notification.as_view(), name="create_notification"),
     path('course/', ManageCourse.as_view(), name="course"),
     path('course/createCourse/', CreateCourse.as_view(), name='create_course'),
