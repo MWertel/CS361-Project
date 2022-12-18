@@ -168,7 +168,9 @@ class Notification(View):
         return render(request, 'NotificationForm.html')
 
     def post(self, request):
-        pass
+        recipients = request.POST.get('recipients')
+        message = request.POST.get('message')
+        return render(request, 'NotificationForm.html')
 
 
 class ManageCourse(View):
