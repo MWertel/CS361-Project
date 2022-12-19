@@ -8,7 +8,8 @@
     </head>
     <body>
         <div class = "notificationBox">
-            <form class = "notificaitonForm">
+            <form class = "NotificationForm" action = "/notification/" method = "post">
+                {% csrf_token %}
                 <label class = "label" id = "usersLabel" for = "recipients">Send to:</label>
                 <input class = "input" type = "text" id = "recipients" name = 'recipients'>
                 <br>
