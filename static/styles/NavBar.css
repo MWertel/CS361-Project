@@ -1,0 +1,123 @@
+@import url("https://fonts.cdnfonts.com/css/google-sans");
+@import url('/Login.css');
+
+
+body{
+    background-color: #22416B;
+
+}
+
+.buttonBox{
+    display:flex;
+    flex-direction: row;
+    background-color: transparent;
+    place-content: center;
+    margin-top: 3.5%;
+}
+
+.homeButton{
+    position: relative;
+    background: transparent;
+    border: none;
+    border-radius: 75px;
+}
+
+.homeButtonIntro{
+    animation: logo_Intro 1s ease forwards;
+}
+
+.homeButtonHover:hover{
+    animation: homeButtonFloat 0.75s cubic-bezier(.25,.1,.25,1) infinite alternate;
+}
+
+@keyframes homeButtonFloat {
+    0%{top : 20px}
+    100%{top : -20px}
+}
+
+@keyframes logo_Intro {
+
+    0%{
+        opacity: 0;
+    }
+    25%{
+        opacity: 25%;
+    }
+    50%{
+        opacity: 50%;
+    }
+    75%{
+        opacity: 75%;
+    }
+    100%{
+        opacity: 100%;
+    }
+    from{
+        top: -100px;
+    }
+    to {
+        top: 0;
+    }
+}
+.logoBox{
+    width: 153px;
+    height: auto;
+}
+.navButton{
+    text-decoration: none;
+    background: #5c8acb;
+    border: 3px solid transparent;
+    width: 160px;
+    height: 70px;
+    border-radius: 25px;
+    margin-left: 75px;
+    margin-right: 75px;
+    margin-top: 15%;
+    cursor: pointer;
+}
+
+.navButton:hover{
+    background: linear-gradient(#5c8acb,#5c8acb) padding-box, linear-gradient(to right,#ad81d7,#abd781) border-box;
+    background-size: 400%;
+    animation: button-movingGradient 0.75s ease infinite alternate;
+}
+
+@keyframes button-movingGradient {
+    from{background-position: right}
+    to{background-position: left}
+}
+
+.linkButton{
+    height: 0;
+}
+
+.buttonText{
+    font-family: "Product Sans Black", sans-serif;
+    color: white;
+    font-size: 18pt;
+
+}
+
+.userContainer{
+    position: absolute;
+
+}
+.userText{
+    text-align: center;
+    text-transform: uppercase;
+    font-family: "Product Sans Black",sans-serif;
+    font-style: oblique;
+    font-size: 35pt;
+    color: #c49049;
+    user-select: none;
+    margin-top: 12px;
+    margin-bottom: -8px;
+}
+
+.underLine{
+    height: 1px;
+    width: 600px;
+    margin: auto;
+    border-bottom: 5px solid #c49049;
+    border-radius: 20px;
+}
