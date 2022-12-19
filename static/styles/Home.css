@@ -26,19 +26,73 @@
     border-radius: 55px;
     box-shadow: 0 5px 15px 1px black;
 }
-
 .checkBox{
-    overflow: auto;
-    margin-left: 32px;
-    margin-bottom: 22px;
     display: block;
+    margin-bottom: 22px;
+    margin-left: 32px;
     width: 1202px;
     height: 91px;
+    border: 4px solid transparent;
     background: #5c8acb;
     border-radius: 46px;
+    cursor: pointer;
 }
 
-:checked + .checkBox{
-
+.inputCheck{
+    display:none;
 }
+
+.inputCheck:checked + .checkBox{
+    background: linear-gradient(#5c8acb,#5c8acb) padding-box, linear-gradient(to right,#ad81d7,#abd781) border-box;
+    background-size: 400%;
+    animation: selectGradient_animation 3s infinite alternate;
+}
+
+.inputCheck:not(:checked) + .checkBox+.dropBox{
+    display:none;
+}
+
+/*d2d9e1*/
+.dropBox{
+    display:block;
+    width: 1202px;
+    height: 180px;
+    background: #d2d9e1;
+}
+
+
+@keyframes selectGradient_animation {
+    0%{
+        background-position: right;
+    }
+    50%{
+        background-position: left;
+    }
+    100%{
+        animation-duration: 0.5s;
+        background-position: right;
+    }
+}
+
+.checkBoxStyle{
+    display: inline-block;
+    margin-top: 20px;
+    font-family: "Product Sans Medium",sans-serif;
+    font-size: 28pt;
+    font-style: italic;
+    color: white;
+    user-select: none;
+}
+
+.userTitle{
+    position:relative;
+    text-transform: uppercase;
+    left: 39px;
+}
+
+.moreInfo{
+    position:relative;
+    left: 775px;
+}
+
 

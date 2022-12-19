@@ -10,19 +10,17 @@
 {% include 'NavBar.html' %}
 
 <div class = "userBox center scrollable" id="userbox">
-{# For each user is a button #}
-
+    {# For each user is a button #}
     {% if request.session.role == "Supervisor" %}
         {% for user in userList %}
+            <input class = 'inputCheck' id = '{{ user.username }}' type = 'checkbox' name = 'username'>
+            <label class = 'checkBox' for="{{ user.username }}">
+                <span class = 'checkBoxStyle userTitle'>USER: {{ user.name }}</span>
+                <span class ="checkBoxStyle moreInfo">more...</span>
+            </label>
+            <div class ='dropBox'></div>
         {% endfor %}
     {% endif %}
-
-<div class = 'checkBox'>
-    <label>
-        <input type = 'checkbox'>
-    </label>
-</div>
-
 </div>
 
 
