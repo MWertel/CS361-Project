@@ -1,73 +1,44 @@
+/*Credit to Google Product Sans*/
+@import url('https://fonts.cdnfonts.com/css/google-sans');
 
-.bannerBox{
-    border: 1px solid black;
-    width: 100%;
-    height: 20vh;
+.center{
+    margin: auto;
 }
 
-.headerText{
-    display:block;
-    margin-bottom: 0;
-    margin-top : 0;
-    font-family: Serif, "Times New Roman", serif;
-    font-size: 2rem;
+#userbox::-webkit-scrollbar{
+    display:none;
 }
 
-.container{
-    display:flex;
+.scrollable{
+    overflow-y: scroll;
+    border-bottom: 44px;
+    border-top: 44px;
+    border-style: solid;
+    border-color:white;
 }
 
-.homeContentBox{
-    border: 1px solid black;
-    width:85%;
-    height: 70vh;
-    overflow-x: hidden;
-    overflow-y:auto;
-    word-wrap: break-word;
+.userBox{
+    margin-top: 18px;
+    width: 1280px;
+    height: 630px;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 55px;
+    box-shadow: 0 5px 15px 1px black;
 }
 
-.buttonBox {
-    margin-top : -15px;
-    padding: 10px;
-}
-
-.buttonBox button{
-    font-family: Andale Mono, monospace;
-    background-color: transparent;
+.checkBox{
+    overflow: auto;
+    margin-left: 32px;
+    margin-bottom: 22px;
     display: block;
-    border: 1px solid black;
-    margin-block: 10px;
-    width:200px;
-    height:50px;
-    text-align:left;
-    line-height:1.1em;
+    width: 1202px;
+    height: 91px;
+    background: #5c8acb;
+    border-radius: 46px;
 }
 
-.buttonBox button:hover{
-    cursor: pointer;
-    border: 2px solid green;
+:checked + .checkBox{
+
 }
 
-.buttonBox .buttonBox a:hover,.buttonBox a:active, .buttonBox a:link ,a:visited{
-    text-decoration: none;
-    color: black;
-}
-
-.buttonText{
-    opacity: 70%;
-    width: fit-content;
-    white-space: nowrap;
-    font-size: 0.9rem;
-}
-
-.testText{
-    font-size: 20px;
-    font-weight: normal;
-}
-
-.testBannerContent{
-    display: block;
-    text-align: center;
-    font-size: 36px;
-    margin-top: 70px;
-}
