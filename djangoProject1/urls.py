@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.urls import path
 
-from CS361_Project.views import Login, Home, ManageAccounts, Notification, ManageCourse, Assigns, Database, LogOut, \
-    CreateCourse, CreateAccount, EditAccount, DeleteAccount
+from CS361_Project.views import Login, Home, ManageAccounts, Notification, ManageCourse, ManageAssign, Database, LogOut, \
+    CreateCourse, CreateAccount, EditAccount, DeleteAccount, AssignUser,RemoveAssign
 
 urlpatterns = [
     # Login is the home page -> ('')
@@ -27,13 +27,16 @@ urlpatterns = [
     path('home/', Home.as_view(), name='home'),
     path('manage/', ManageAccounts.as_view(), name='manage_account'),
     path('manage/createAccount/', CreateAccount.as_view(), name='create_account'),
-
     path('manage/editAccount/', EditAccount.as_view(), name='edit_account'),
     path('manage/deleteAccount/', DeleteAccount.as_view(), name='delete_account'),
+
+    path('assign/',ManageAssign.as_view(),name = 'manage_assign'),
+    path('assign/assignUser/',AssignUser.as_view(), name = "assign_user"),
+    path('assign/removeAssign/',RemoveAssign.as_view(), name = "remove_Assign"),
+
     path('notification/', Notification.as_view(), name="create_notification"),
     path('course/', ManageCourse.as_view(), name="course"),
     path('course/createCourse/', CreateCourse.as_view(), name='create_course'),
-    path('assign/', Assigns.as_view(), name="assign_person"),
     path('data/', Database.as_view(), name="view_data"),
     path('admin/', admin.site.urls),
 ]

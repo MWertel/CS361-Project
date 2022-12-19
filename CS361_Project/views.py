@@ -2,7 +2,7 @@ from django.middleware.csrf import rotate_token
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Account, Supervisor, Instructor, TA, Course, LabSection
-from .functions import generateID, changeName, changePassword, changeEmail, changeAddress,changeTelephone, passwordChecker, sendEmail
+from .functions import generateID, changeName, changePassword, changeEmail, changeAddress,changeTelephone, passwordChecker, sendEmail, assignToTable, removeFromTable
 
 
 # Create your views here.
@@ -207,16 +207,84 @@ class CreateCourse(View):
         return render(request, 'ManageCourse.html')
 
 
-class Assigns(View):
+class ManageAssign(View):
     def get(self, request):
         if request.session.get("is_authenticate") and request.session.get('role') == "Supervisor":
-            return render(request, 'Assign.html')
+            courses = list(Course.objects.all())
+            labs = list(LabSection.objects.all())
+
+            users = list(Account.objects.filter(role = "TA")) + list(Account.objects.filter(role = "Instructor"))
+
+            return render(request, 'Assign.html',{"selectedUsers":users,"courses":courses,"labs":labs})
         else:
             return render(request, "Home.html", {"error": "DO NOT HAVE PERMISSION"})
 
     def post(self, request):
-        pass
+        request.session['action'] = None
+        courses = list(Course.objects.all())
+        labs = list(LabSection.objects.all())
+        users = list(Account.objects.filter(role="TA")) + list(Account.objects.filter(role="Instructor"))
 
+        if request.POST.get('assign_button') is not None:
+            request.session['action'] = 'Assign'
+        else:
+            request.session['action'] = "Remove"
+
+        return render(request, 'Assign.html', {"selectedUsers": users, "courses": courses, "labs": labs})
+
+class AssignUser(View):
+    def get(self, request):
+        return render(request, 'Assign.html')
+
+    def post(self, request):
+        action = request.session["action"]
+
+        if action == "Assign":
+            username = request.POST.get("user")
+
+            if username == None:
+                error = "There needs to be an user to assign Course and/or Lab Section"
+                return render(request, 'Assign.html', {"error": error})
+
+            course = request.POST.get("course")
+            labSection = request.POST.get("lab")
+
+            if course == None and labSection == None:
+                error = "There needs to be a course or labsection to assign user to"
+                return render(request, 'Assign.html', {"error": error})
+
+            user = Account.objects.get(username = username)
+            if not assignToTable(user,course.labSection):#Failure to assign due to assignment already existing
+                error = "User was already assigned to Course-Lab Section Combination"
+                return render(request, 'Assign.html', {"error": error})
+
+        return render(request, 'Assign.html')
+
+class RemoveAssign(View):
+    def get(self, request):
+        return render(request, 'Assign.html')
+
+    def post(self, request):
+        action = request.session["action"]
+        if action == "Remove":
+            action = request.session["action"]
+
+            username = request.POST.get("user")
+
+            if username == None:
+                error = "There needs to be an user to remove Course and/or Lab Section assignment"
+                return render(request, 'Assign.html', {"error": error})
+
+            course = request.POST.get("course")
+            labSection = request.POST.get("lab")
+
+            if course == None and labSection == None:
+                error = "There needs to be a course or labs ection to remove user from"
+                return render(request, 'Assign.html', {"error": error})
+
+            user = Account.objects.get(username=username)
+            removeFromTable(user, course.labSection)
+        return render(request, 'Assign.html')
 
 class Database(View):
     def get(self, request):
