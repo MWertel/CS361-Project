@@ -7,18 +7,27 @@
     <link rel = "stylesheet" href = "{% static 'styles/Course.css' %} ? {% now 'U' %}" type = 'text/css'>
 </head>
 <body>
+    {{ error }}
     <div class = 'container'>
-
         <div class = 'buttonBox'>
             <form action = '/course/' method = 'post'> {% csrf_token %}
                 <a>
-                    <button class = 'buttonStyle' type = 'submit' name ='create_button'>Create</button>
+                    <button class = 'buttonStyle' type = 'submit' name ='create_button'>Create Course</button>
                 </a>
                 <a>
-                    <button class = 'buttonStyle' type = 'submit' name ='edit_button'>Edit</button>
+                    <button class = 'buttonStyle' type = 'submit' name ='edit_button'>Edit Course</button>
                 </a>
                 <a>
-                    <button class = 'buttonStyle' type = 'submit' name ='delete_button'>Delete</button>
+                    <button class = 'buttonStyle' type = 'submit' name ='delete_button'>Delete Course</button>
+                </a>
+                <a>
+                    <button class = 'buttonStyle' type = 'submit' name ='createLab_button'>Create Lab Section</button>
+                </a>
+                <a>
+                    <button class = 'buttonStyle' type = 'submit' name ='editLab_button'>Edit Lab Section</button>
+                </a>
+                <a>
+                    <button class = 'buttonStyle' type = 'submit' name ='deleteLab_button'>Delete Lab Section</button>
                 </a>
             </form>
         </div>
@@ -33,14 +42,95 @@
                 <input name = 'department' type = 'text' id = 'department_name' placeholder="Department" maxlength = '50'>
                 <button name = 'create' id = 'create_button' type = 'submit'>Create</button>
             </form>
+            {% elif request.session.action == 'Create_Lab' %}
+            {# Edit Form on Button Clicked #}
+            <form action = '/course/createLab/' method = 'post'>
+                {% csrf_token %}
+                <label for = 'lab_name'>Lab Section Name:</label>
+                <input name = 'name' type = 'text' id = 'lab_name' placeholder= "Name" maxlength = '50'>
+                <label for = 'department_name'>Department Name:</label>
+                <input name = 'department' type = 'text' id = 'department_name' placeholder="Department" maxlength = '50'>
+                <label for = "course_select" type = "select" id = "course" placeholder = "Course" maxlength = "50"> Course: </label>
+                <select id = "course" name = 'course'>
+                    <option value = "" disabled selected hidden>Choose Course</option>
+                    {% for i in courses %}
+                        <option value='{{i.name}}'>{{ i.name }} </option>
+                    {% endfor %}
+                </select>
+                <button name = 'create' id = 'create_button' type = 'submit'>Create</button>
+
+            </form>
+
+
             {% elif request.session.action == 'Edit' %}
             {# Edit Form on Button Clicked #}
             <form action = '/course/editCourse/' method = 'post'>
+                {% csrf_token %}
+                <label for = "course_select" type = "select" id = "course" placeholder = "Course" maxlength = "50"> Course: </label>
+                <select id = "course" name = 'course'>
+                    <option value = "" disabled selected hidden>Choose Course</option>
+                    {% for i in courses %}
+                        <option value='{{i.name}}'>{{ i.name }} </option>
+                    {% endfor %}
+                </select>
+
+                <label for = 'course_name'>Course Name:</label>
+                <input name = 'name' type = 'text' id = 'course_name' placeholder= "Name" maxlength = '50'>
+                <label for = 'department_name'>Department Name:</label>
+                <input name = 'department' type = 'text' id = 'department_name' placeholder="Department" maxlength = '50'>
+                <button name = 'edit' id = 'edit_button' type = 'submit'>Edit</button>
+            </form>
+
+            {% elif request.session.action == 'Edit_Lab' %}
+            {# Edit Form on Button Clicked #}
+            <form action = '/course/editLab/' method = 'post'>
+                {% csrf_token %}
+                <label for = "course_select" type = "select" id = "course" placeholder = "Course" maxlength = "50"> Lab Section: </label>
+                <select id = "lab" name = 'lab'>
+                    <option value = "" disabled selected hidden>Choose Lab Section</option>
+                    {% for i in labs %}
+                        <option value='{{i.name}}'>{{ i.name }} </option>
+                    {% endfor %}
+                </select>
+
+                <label for = 'course_name'>Lab Section Name:</label>
+                <input name = 'name' type = 'text' id = 'course_name' placeholder= "Name" maxlength = '50'>
+                <label for = 'department_name'>Department Name:</label>
+                <input name = 'department' type = 'text' id = 'department_name' placeholder="Department" maxlength = '50'>
+                <select id = "course" name = 'course'>
+                    <option value = "" disabled selected hidden>Choose Course</option>
+                    {% for i in courses %}
+                        <option value='{{i.name}}'>{{ i.name }} </option>
+                    {% endfor %}
+                </select>
+                <button name = 'edit' id = 'edit_button' type = 'submit'>Edit</button>
             </form>
 
             {% elif request.session.action == 'Delete' %}
         {# Delete Drop Box Form on Button Clicked #}
-            <form action = '/course/deleteCourse' method = 'post'>
+            <form action = '/course/deleteCourse/' method = 'post'>
+                {% csrf_token %}
+                <label for = "course_select" type = "select" id = "course" placeholder = "Course" maxlength = "50"> Course: </label>
+                <select id = "course" name = 'course'>
+                    <option value = "" disabled selected hidden>Choose Course</option>
+                    {% for i in courses %}
+                        <option value='{{i.id}}'>{{ i.name }} </option>
+                    {% endfor %}
+                </select>
+            <button name = 'delete' id = 'delete_button' type = 'submit'>Delete</button>
+            </form>
+            {% elif request.session.action == 'Delete_Lab' %}
+        {# Delete Drop Box Form on Button Clicked #}
+            <form action = '/course/deleteLab/' method = 'post'>
+                {% csrf_token %}
+                <label for = "course_select" type = "select" id = "lab" placeholder = "Lab Section" maxlength = "50"> Lab Section: </label>
+                <select id = "lab" name = 'lab'>
+                    <option value = "" disabled selected hidden>Choose Lab Section</option>
+                    {% for i in labs %}
+                        <option value='{{i.id}}'>{{ i.name }} </option>
+                    {% endfor %}
+                </select>
+            <button name = 'deleteLab' id = 'deleteLab_button' type = 'submit'>Delete</button>
             </form>
             {% endif %}
         </div>

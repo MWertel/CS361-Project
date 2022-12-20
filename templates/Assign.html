@@ -5,7 +5,78 @@
     <title>Assign TA/Instructor</title>
 </head>
 <body>
-<a href="Assignments/Manage.html">Manage Assignments</a>
-<a href="Assignments/Error.html">Error Page</a>
+    <div class = 'container'>
+
+        <div class = 'buttonBox'>
+            <form action = '/assign/' method = 'post'> {% csrf_token %}
+                <a>
+                    <button class = 'buttonStyle' type = 'submit' name ='assign_button'>Assign</button>
+                </a>
+                <a>
+                    <button class = 'buttonStyle' type = 'submit' name ='remove_button'>Remove Assignment</button>
+                </a>
+            </form>
+        </div>
+        {{ error }}
+        <div class = 'formBox'>
+            {% if request.session.action == 'Assign' %}
+            {# *DEFAULT* Create Form on Button Clicked #}
+            <form class = "createBox" action = '/assign/assignUser/' method = 'post'>
+                {% csrf_token %}
+                <label class = "label" for = "user">User:</label>
+                    <select class = "userSelect" id = "user" name = 'user'>
+                        <option value = "" disabled selected hidden>Choose user</option>
+                        {% for i in selectedUsers %}
+                            <option value='{{i.name}}'>{{ i.name }}({{ i.role }})</option>
+                        {% endfor %}
+                    </select>
+                <label class = "label" for = "course">Course:</label>
+                    <select class = "courseSelect" id = "course" name = 'course'>
+                        <option value = "" disabled selected hidden>Choose Course</option>
+                        {% for i in courses %}
+                            <option value='{{i.name}}'>{{ i.name }} </option>
+                        {% endfor %}
+                    </select>
+                <label class = "label" for = "Lab">Lab Section:</label>
+                    <select class = "courseSelect" id = "lab" name = 'lab'>
+                        <option value = "" disabled selected hidden>Choose Lab Section</option>
+                        {% for i in labs %}
+                            <option value='{{i.name}}'>{{ i.name }} </option>
+                        {% endfor %}
+                    </select>
+                <button name = 'assign' id = 'assign_button' type = 'submit'>Assign</button>
+            </form>
+            {% elif request.session.action == 'Remove' %}
+            {# Edit Form on Button Clicked #}
+            <form class = "createBox" action = '/assign/removeAssign/' method = 'post'>
+                {% csrf_token %}
+                <label class = "label" for = "user">User:</label>
+                    <select class = "userSelect" id = "user" name = 'user'>
+                        <option value = "" disabled selected hidden>Choose user</option>
+                        {% for i in selectedUsers %}
+                            <option value='{{i.name}}'>{{ i.name }}({{ i.role }})</option>
+                        {% endfor %}
+                    </select>
+                <label class = "label" for = "course">Course:</label>
+                    <select class = "courseSelect" id = "course" name = 'course'>
+                        <option value = "" disabled selected hidden>Choose Course</option>
+                        {% for i in courses %}
+                            <option value='{{i.name}}'>{{ i.name }} </option>
+                        {% endfor %}
+                    </select>
+                <label class = "label" for = "Lab">Lab Section:</label>
+                    <select class = "courseSelect" id = "lab" name = 'lab'>
+                        <option value = "" disabled selected hidden>Choose Lab Section</option>
+                        {% for i in labs %}
+                            <option value='{{i.name}}'>{{ i.name }} </option>
+                        {% endfor %}
+                    </select>
+                <button name = 'remove' id = 'remove_button' type = 'submit'>Remove</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+        <button type="button" class = "homeButton" id = "button">
+            <a href="{% url 'home' %}">Return to home screen</a>
+        </button>
 </body>
-</html>
