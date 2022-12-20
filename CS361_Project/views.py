@@ -63,6 +63,8 @@ class ManageAccounts(View):
             request.session['action'] = 'create'
         elif request.POST.get('edit') is not None:
             request.session['action'] = 'edit'
+            userList = list(Account.objects.all())
+            return render(request, 'Accounts/Manage.html', {"userList": userList})
         else:
             request.session['action'] = 'delete'
 
@@ -70,9 +72,6 @@ class ManageAccounts(View):
 
 
 class CreateAccount(View):
-
-    def get(self, request):
-        return render(request, 'Accounts/Manage.html', {"validForm": "valid"})
 
     def post(self, request):
         action = request.session["action"]
@@ -109,13 +108,10 @@ class CreateAccount(View):
 
 class EditAccount(View):
 
-    def get(self, request):
-        return render(request, 'Accounts/Manage.html')
-
     def post(self, request):
         action = request.session["action"]
-
         if action == "edit":
+
             username = request.POST.get("Username")
             if len(list(Account.objects.filter(username = username))) == 0 :  # username doesn't exists
                 error = "Username not in Database"
@@ -145,9 +141,6 @@ class EditAccount(View):
 
 
 class DeleteAccount(View):
-
-    def get(self, request):
-        return render(request, 'Accounts/Manage.html')
 
     def post(self, request):
         action = request.session["action"]

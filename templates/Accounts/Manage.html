@@ -55,8 +55,13 @@
                 </form>
             {% elif request.session.action == 'edit' %}
                 <form class = "editAccountForm" action = "/manage/editAccount/" method = "post"> {% csrf_token %}
-                    <label class = "label" for="Username">Username:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Username" name = 'Username' >
+                    <label class = "label" for="usernameSelector">Username:</label>
+                    <select class = "userName" id = "usernameSelector" name = 'userName'>
+                        <option value = "" disabled selected hidden>Choose User</option>
+                        {% for user in userList %}
+                            <option value = "{{ user.username }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
                     <br>
                     <label class = "label" for="Password">Password:</label>
                     <input class = "input {{ inputCSS }}" type = "text" id = "Password" name = 'Password' >
