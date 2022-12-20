@@ -1,10 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Notification Form</title>
-</head>
-<body>
-<a href="NotificationConfirmation.html">Confirmation Page</a>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Notification Form</title>
+        <link rel = "stylesheet" href = "{% static 'styles/Notification.css' %}?{% now 'U' %}" type = "text/css">
+    </head>
+    <body>
+        <div class = "notificationBox">
+            <form class = "NotificationForm" action = "/notification/" method = "post">
+                {% csrf_token %}
+                <label class = "label" id = "usersLabel" for = "recipients">Send to:</label>
+                <input class = "input" type = "text" id = "recipients" name = 'recipients'>
+                <br>
+                <label class = "label" id = "messageBoxLabel" for = "messageBox">Message:</label>
+                <input class = "input" type = "text" id = "messageBox" name = 'messageBox'>
+                <br>
+                <button type = "submit">Send</button>
+            </form>
+        </div>
+        <button type="button" class = "homeButton" id = "button">
+            <a href="{% url 'home' %}">Return to home screen</a>
+        </button>
+    </body>
 </html>

@@ -1,7 +1,8 @@
 from django.middleware.csrf import rotate_token
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Account, Supervisor, Instructor, TA
+from .models import Account, Supervisor, Instructor, TA, Course, LabSection
+from .functions import generateID, changeName, changePassword, changeEmail, changeAddress,changeTelephone, passwordChecker, sendEmail
 
 
 # Create your views here.
@@ -31,36 +32,128 @@ class Login(View):
             session['is_authenticate'] = True
             session['role'] = user.role
             session['name'] = user.name
+            session['username'] = user.username
             return redirect('home/')
         else:
             return render(request, "login.html",
                           {"error": "Incorrect Password", "inputCSS": "invalidInputBox", "errorCSS": "failedError"})
 
-
 class Home(View):
     def get(self, request):
+
+        accounts = list(Account.objects.all())
+
         if request.session.get('is_authenticate'):
-            return render(request, "Home.html", )
+            return render(request, "Home.html", {"accounts": accounts})
         else:
             return render(request, "login.html")
 
 
 #     No Post yet.
 
-class SupCreateAccounts(View):
-    pass
 
-
-class SupEditAccounts(View):
-    pass
-
-
-class ManageAccounts(Authenticate, View):
+class ManageAccounts(View):
     def get(self, request):
-        return render(request, 'Accounts/Manage.html')
+        request.session['action'] = None
+        return render(request, 'Accounts/Manage.html', {"validForm": 'invalid'})
 
     def post(self, request):
-        pass
+        request.session['action'] = None
+        if request.POST.get('create') is not None:
+            request.session['action'] = 'create'
+        elif request.POST.get('edit') is not None:
+            request.session['action'] = 'edit'
+            userList = list(Account.objects.all())
+            return render(request, 'Accounts/Manage.html', {"userList": userList})
+        else:
+            request.session['action'] = 'delete'
+
+        return render(request, 'Accounts/Manage.html')
+
+
+class CreateAccount(View):
+
+    def post(self, request):
+        action = request.session["action"]
+
+        if action == "create":
+            username = request.POST.get("Username")
+            if  len(list(Account.objects.filter(username = username))) > 0 :#username already exists
+                error = "Username already exists in Database"
+                return render(request, 'Accounts/Manage.html',{"error":error})
+
+            role = request.POST.get("role")
+            if role == None:#No role given, the user requires a role
+                error = "Every user needs to have a role"
+                return render(request, "Accounts/Manage.html", {"error":error})
+
+            password = request.POST.get("Password")
+            if passwordChecker(password) == False: #Bad Password
+                error = "Password must have at least one digit, one upper case character, one lower case character, one special symbol, and at least 5 characters"
+                return render(request,"Accounts/Manage.html", {"error":error})
+
+            id = generateID(username)
+            newAccount = Account(id = id, username = username,
+                                 password = password,
+                                 name = request.POST.get("Name"),
+                                 role = role,
+                                 email = request.POST.get("Email"),
+                                 telephone = request.POST.get("Telephone"),
+                                 address = request.POST.get("Address")
+            )
+            newAccount.save()
+
+        return render(request, 'Accounts/Manage.html')
+
+
+class EditAccount(View):
+
+    def post(self, request):
+        action = request.session["action"]
+        if action == "edit":
+
+            username = request.POST.get("Username")
+            if len(list(Account.objects.filter(username = username))) == 0 :  # username doesn't exists
+                error = "Username not in Database"
+                return render(request, 'Accounts/Manage.html',{"error":error})
+
+            editAccount = Account.objects.get(username=username)
+            if request.POST.get("Password") != "":
+                if passwordChecker(request.POST.get("Password")) == False:  # Bad Password
+                    error = "Password must have at least one digit, one upper case character, one lower case character, one special symbol, and at least 5 characters"
+                    return render(request, "Accounts/Manage.html", {"error": error})
+                changePassword(editAccount, request.POST.get("Password"))
+
+            if request.POST.get("Name") != "":
+                changeName(editAccount, request.POST.get("Name"))
+
+            if request.POST.get("Email") != "":
+                changeEmail(editAccount, request.POST.get("Email"))
+
+            if request.POST.get("Telephone") != "":
+                changeTelephone(editAccount, request.POST.get("Telephone"))
+
+            if request.POST.get("Address") != "":
+                changeAddress(editAccount, request.POST.get("Address"))
+
+            editAccount.save()
+        return render(request, 'Accounts/Manage.html')
+
+
+class DeleteAccount(View):
+
+    def post(self, request):
+        action = request.session["action"]
+
+        if action == "delete":  #delete
+            username = request.POST.get("username")
+            if len(list(Account.objects.filter(username = username))) == 0 :  # username doesn't exists
+                error = "Username not in Database"
+                return render(request, 'Accounts/Manage.html',{"error":error})
+            else:
+                deleteAccount = Account.objects.get(username=username)
+                deleteAccount.delete()
+        return render(request, 'Accounts/Manage.html')
 
 
 class Notification(View):
@@ -68,7 +161,15 @@ class Notification(View):
         return render(request, 'NotificationForm.html')
 
     def post(self, request):
-        pass
+
+        recipients = request.POST.get('recipients').split(',')
+        message = request.POST.get('message')
+        sender = Account.objects.get(username = request.session.get("username")).email
+        try:
+            sendEmail(message, sender, recipients)
+        except:
+            return render(request, 'NotificationForm.html')
+        return render(request, 'NotificationForm.html')
 
 
 class ManageCourse(View):
@@ -89,7 +190,14 @@ class ManageCourse(View):
 class CreateCourse(View):
     # Only post method.
     def post(self, request):
-        return render(request, 'Accounts/Manage.html')
+        courseName = request.POST.get("name")
+        department = request.POST.get("department")
+        id = generateID(courseName)
+
+        newCourse = Course(id = id, department= department, name=courseName)
+
+        newCourse.save()
+        return render(request, 'ManageCourse.html')
 
 
 class Assigns(View):
