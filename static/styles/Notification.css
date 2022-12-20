@@ -33,9 +33,10 @@
 }
 
 .input {
+    position: relative;
     width: 300px;
     padding: 10px;
-    margin: 5px;
+    margin-top: 10px;
 }
 
 .input:focus {
@@ -48,10 +49,20 @@
 }
 
 .notificationBox {
+    display: flex;
     position: absolute;
     width: fit-content;
     border: 1px solid black;
-    padding: 100px;
+    padding-left: 100px;
+    padding-right: 100px;
     top: 30%;
     left: 30%;
+}
+
+#messageBox {
+    height: 450px;
+}
+
+.notifcationForm button {
+
 }
