@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'styles/defaultContainer.css' %}?{% now 'U' %}" type="text/css">
+    {% block css %}
+    {% endblock %}
+</head>
+{% include 'NavBar.html' %}
+<div class = "mainBox center scrollable" id="container">
+    {% block content %}
+    {% endblock %}
+</div>

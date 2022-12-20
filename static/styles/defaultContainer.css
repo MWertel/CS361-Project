@@ -1,0 +1,26 @@
+
+.center{
+    margin: auto;
+}
+
+.scrollable::-webkit-scrollbar{
+    display:none;
+}
+
+.scrollable{
+    overflow-y: scroll;
+    border-bottom: 44px;
+    border-top: 44px;
+    border-style: solid;
+    border-color:white;
+}
+
+.mainBox{
+    margin-top: 18px;
+    width: 1280px;
+    height: 630px;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 55px;
+    box-shadow: 0 5px 15px 1px black;
+}
