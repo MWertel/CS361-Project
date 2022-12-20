@@ -11,18 +11,43 @@
 
 <div class = "userBox center scrollable" id="userbox">
     {# For each user is a button #}
-    {% if request.session.role == "Supervisor" %}
+    {% if request.session.user.role == "Supervisor" %}
         {% for user in userList %}
             <input class = 'inputCheck' id = '{{ user.username }}' type = 'checkbox' name = 'username'>
-            <label class = 'checkBox' for="{{ user.username }}">
+            <label class = 'checkBox noselect pointer' for="{{ user.username }}">
                 <span class = 'checkBoxStyle userTitle'>USER: {{ user.name }}</span>
                 <span class ="checkBoxStyle moreInfo">more...</span>
             </label>
-            <div class ='dropBox'></div>
+            <div class ='dropBox noselect'>
+                <table class = 'table containerTable'>
+                    <tr class ='rowTitle'>
+                        <th class = 'leftPadding'>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Role</th>
+                    </tr>
+                    <tr class ='rowInformation'>
+                        <td class = 'leftBorderCurve'>{{ user.name }}</td>
+                        <td class = 'leftPadding'>{{ user.email }}</td>
+                        <td class = 'leftPadding'>{{ user.telephone }}</td>
+                        <td class = 'leftPadding'>{{ user.address }}</td>
+                        <td class = 'rightBorderCurve leftPadding'>{{ user.role }}</td>
+                    </tr>
+                </table>
+                <table class = 'table containerTable'>
+                    <tr class = 'rowTitle'>
+                        <th class = 'leftPadding'>Course</th>
+                        <th>Department</th>
+                    </tr>
+                    <tr class = 'rowInformation'>
+                        <td class ='leftBorderCurve'>Course</td>
+                        <td class = 'rightBorderCurve leftPadding'>computer science</td>
+                    </tr>
+                </table>
+            </div>
         {% endfor %}
     {% endif %}
 </div>
-
-
 </body>
 </html>

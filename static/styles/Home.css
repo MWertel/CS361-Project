@@ -9,6 +9,14 @@
     display:none;
 }
 
+.noselect{
+    user-select: none;
+}
+
+.pointer{
+    cursor:pointer;
+}
+
 .scrollable{
     overflow-y: scroll;
     border-bottom: 44px;
@@ -28,14 +36,19 @@
 }
 .checkBox{
     display: block;
+    position: relative;
     margin-bottom: 22px;
     margin-left: 32px;
     width: 1202px;
     height: 91px;
-    border: 4px solid transparent;
     background: #5c8acb;
     border-radius: 46px;
-    cursor: pointer;
+}
+
+.checkBox:hover{
+    border-left: 8px;
+    border-right: 8px;
+    border-bottom: 8px solid #22416B;
 }
 
 .inputCheck{
@@ -43,23 +56,38 @@
 }
 
 .inputCheck:checked + .checkBox{
+    border: 4px solid transparent;
     background: linear-gradient(#5c8acb,#5c8acb) padding-box, linear-gradient(to right,#ad81d7,#abd781) border-box;
     background-size: 400%;
     animation: selectGradient_animation 3s infinite alternate;
 }
 
 .inputCheck:not(:checked) + .checkBox+.dropBox{
-    display:none;
+    display: none;
 }
 
 /*d2d9e1*/
 .dropBox{
-    display:block;
+    overflow-x: scroll;
+    display:inline-block;
     width: 1202px;
     height: 180px;
+    margin-top: -22px;
+    margin-bottom: 22px;
+    border-radius: 50px;
+    margin-left: 32px;
     background: #d2d9e1;
+    animation: dropDown 1s ease forwards;
 }
 
+.dropBox::-webkit-scrollbar{
+    display:none;
+}
+
+@keyframes dropDown{
+    from{height: 0}
+    to{height: 180px}
+}
 
 @keyframes selectGradient_animation {
     0%{
@@ -91,8 +119,67 @@
 }
 
 .moreInfo{
-    position:relative;
-    left: 775px;
+    position:absolute;
+    left: 1050px;
 }
+
+.table{
+    display: block;
+    text-align: center;
+    font-family: "Product Sans Light",sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-collapse: collapse;
+
+}
+
+.containerTable{
+    margin-top: 10px;
+    margin-left: 25px;
+}
+
+.rowTitle{
+    text-align: center;
+    font-size: 18pt;
+    animation: titleSlides 1s ease forwards;
+}
+
+.rowInformation{
+    font-size: 16pt;
+    background-color: #a6b3c3;
+    animation: titleSlides 1s ease forwards;
+    opacity: 0;
+    animation-delay: 0.3s;
+
+}
+.leftPadding{
+    padding-left: 35px;
+}
+
+.leftBorderCurve{
+    padding-left: 30px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+.rightBorderCurve{
+    padding-right: 30px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+
+
+@keyframes titleSlides{
+     0% {
+      opacity: 0;
+      transform: translateX(-30px);
+   }
+   100% {
+      opacity: 1;
+      transform: translateX(0);
+   }
+}
+
 
 
