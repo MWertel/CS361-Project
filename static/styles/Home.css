@@ -1,73 +1,185 @@
+/*Credit to Google Product Sans*/
+@import url('https://fonts.cdnfonts.com/css/google-sans');
 
-.bannerBox{
-    border: 1px solid black;
-    width: 100%;
-    height: 20vh;
+.center{
+    margin: auto;
 }
 
-.headerText{
-    display:block;
-    margin-bottom: 0;
-    margin-top : 0;
-    font-family: Serif, "Times New Roman", serif;
-    font-size: 2rem;
+#userbox::-webkit-scrollbar{
+    display:none;
 }
 
-.container{
-    display:flex;
+.noselect{
+    user-select: none;
 }
 
-.homeContentBox{
-    border: 1px solid black;
-    width:85%;
-    height: 70vh;
-    overflow-x: hidden;
-    overflow-y:auto;
-    word-wrap: break-word;
+.pointer{
+    cursor:pointer;
 }
 
-.buttonBox {
-    margin-top : -15px;
-    padding: 10px;
+.scrollable{
+    overflow-y: scroll;
+    border-bottom: 44px;
+    border-top: 44px;
+    border-style: solid;
+    border-color:white;
 }
 
-.buttonBox button{
-    font-family: Andale Mono, monospace;
-    background-color: transparent;
+.userBox{
+    margin-top: 18px;
+    width: 1280px;
+    height: 630px;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 55px;
+    box-shadow: 0 5px 15px 1px black;
+}
+.checkBox{
     display: block;
-    border: 1px solid black;
-    margin-block: 10px;
-    width:200px;
-    height:50px;
-    text-align:left;
-    line-height:1.1em;
+    position: relative;
+    margin-bottom: 22px;
+    margin-left: 32px;
+    width: 1202px;
+    height: 91px;
+    background: #5c8acb;
+    border-radius: 46px;
 }
 
-.buttonBox button:hover{
-    cursor: pointer;
-    border: 2px solid green;
+.checkBox:hover{
+    border-left: 8px;
+    border-right: 8px;
+    border-bottom: 8px solid #22416B;
 }
 
-.buttonBox .buttonBox a:hover,.buttonBox a:active, .buttonBox a:link ,a:visited{
-    text-decoration: none;
-    color: black;
+.inputCheck{
+    display:none;
 }
 
-.buttonText{
-    opacity: 70%;
-    width: fit-content;
-    white-space: nowrap;
-    font-size: 0.9rem;
+.inputCheck:checked + .checkBox{
+    border: 4px solid transparent;
+    background: linear-gradient(#5c8acb,#5c8acb) padding-box, linear-gradient(to right,#ad81d7,#abd781) border-box;
+    background-size: 400%;
+    animation: selectGradient_animation 3s infinite alternate;
 }
 
-.testText{
-    font-size: 20px;
-    font-weight: normal;
+.inputCheck:not(:checked) + .checkBox+.dropBox{
+    display: none;
 }
 
-.testBannerContent{
+/*d2d9e1*/
+.dropBox{
+    overflow-x: scroll;
+    display:inline-block;
+    width: 1202px;
+    height: 180px;
+    margin-top: -22px;
+    margin-bottom: 22px;
+    border-radius: 50px;
+    margin-left: 32px;
+    background: #d2d9e1;
+    animation: dropDown 1s ease forwards;
+}
+
+.dropBox::-webkit-scrollbar{
+    display:none;
+}
+
+@keyframes dropDown{
+    from{height: 0}
+    to{height: 180px}
+}
+
+@keyframes selectGradient_animation {
+    0%{
+        background-position: right;
+    }
+    50%{
+        background-position: left;
+    }
+    100%{
+        animation-duration: 0.5s;
+        background-position: right;
+    }
+}
+
+.checkBoxStyle{
+    display: inline-block;
+    margin-top: 20px;
+    font-family: "Product Sans Medium",sans-serif;
+    font-size: 28pt;
+    font-style: italic;
+    color: white;
+    user-select: none;
+}
+
+.userTitle{
+    position:relative;
+    text-transform: uppercase;
+    left: 39px;
+}
+
+.moreInfo{
+    position:absolute;
+    left: 1050px;
+}
+
+.table{
     display: block;
     text-align: center;
-    font-size: 36px;
-    margin-top: 70px;
+    font-family: "Product Sans Light",sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-collapse: collapse;
+
 }
+
+.containerTable{
+    margin-top: 10px;
+    margin-left: 25px;
+}
+
+.rowTitle{
+    text-align: center;
+    font-size: 18pt;
+    animation: titleSlides 1s ease forwards;
+}
+
+.rowInformation{
+    font-size: 16pt;
+    background-color: #a6b3c3;
+    animation: titleSlides 1s ease forwards;
+    opacity: 0;
+    animation-delay: 0.3s;
+
+}
+.leftPadding{
+    padding-left: 35px;
+}
+
+.leftBorderCurve{
+    padding-left: 30px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+.rightBorderCurve{
+    padding-right: 30px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+
+
+@keyframes titleSlides{
+     0% {
+      opacity: 0;
+      transform: translateX(-30px);
+   }
+   100% {
+      opacity: 1;
+      transform: translateX(0);
+   }
+}
+
+
+

@@ -7,34 +7,46 @@
     <link rel="stylesheet" href="{% static 'styles/Home.css' %}?{% now 'U' %}" type="text/css">
 </head>
 <body>
-    <div class = "bannerBox">
-        <span class = "testBannerContent">BANNER CONTENT</span>
-    </div>
-    <h2 class = 'headerText'>Hello, {{ request.session.name }}: News/Notifications/Etc</h2>
-    <div class = 'container'>
-        <div class = 'homeContentBox'>
-        {# Insert contents in here: #}
-            <div class = "testText">
-               {% for Account in accounts %}
-                    <li>Username: {{Account.username}}, Email: {{ Account.email }}, Phone Number: {{ Account.telephone }}</li>
-               {% endfor %}
+{% include 'NavBar.html' %}
+<div class = "userBox center scrollable" id="userbox">
+    {# For each user is a button #}
+    {% if request.session.user.role == "Supervisor" %}
+        {% for user in userList %}
+            <input class = 'inputCheck' id = '{{ user.username }}' type = 'checkbox' name = 'username'>
+            <label class = 'checkBox noselect pointer' for="{{ user.username }}">
+                <span class = 'checkBoxStyle userTitle'>USER: {{ user.name }}</span>
+                <span class ="checkBoxStyle moreInfo">more...</span>
+            </label>
+            <div class ='dropBox noselect'>
+                <table class = 'table containerTable'>
+                    <tr class ='rowTitle'>
+                        <th class = 'leftPadding'>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Role</th>
+                    </tr>
+                    <tr class ='rowInformation'>
+                        <td class = 'leftBorderCurve'>{{ user.name }}</td>
+                        <td class = 'leftPadding'>{{ user.email }}</td>
+                        <td class = 'leftPadding'>{{ user.telephone }}</td>
+                        <td class = 'leftPadding'>{{ user.address }}</td>
+                        <td class = 'rightBorderCurve leftPadding'>{{ user.role }}</td>
+                    </tr>
+                </table>
+                <table class = 'table containerTable'>
+                    <tr class = 'rowTitle'>
+                        <th class = 'leftPadding'>Course</th>
+                        <th>Department</th>
+                    </tr>
+                    <tr class = 'rowInformation'>
+                        <td class ='leftBorderCurve'>Course</td>
+                        <td class = 'rightBorderCurve leftPadding'>computer science</td>
+                    </tr>
+                </table>
             </div>
-        </div>
-
-        <div class ='buttonBox'>
-            {# Change the type of button here: #}
-            <a href="{% url 'create_notification' %}"><button class = 'buttonText'>Create Notification</button></a>
-            <a href="{% url 'manage_account' %}"><button type="button" class = "buttonText">Manage Account</button></a>
-            {%if request.session.role == 'Supervisor' %}
-            <a href="{% url 'course' %}"><button class = 'buttonText'>Manage Courses</button></a>
-            <a href="{% url 'manage_assign' %}"><button class = 'buttonText' >Assign TAs/Instructors</button></a>
-            <a href="{% url 'view_data' %}"><button class = 'buttonText'>View Database</button></a>
-            {% endif %}
-            <form action = '{% url 'logout' %}' method = 'get'>
-                <a ><button type = "submit" class = 'buttonText'>Logout</button></a>
-            </form>
-        </div>
-
-    </div>
+        {% endfor %}
+    {% endif %}
+</div>
 </body>
 </html>

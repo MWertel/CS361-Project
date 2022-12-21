@@ -1,10 +1,7 @@
 @import url("https://fonts.cdnfonts.com/css/google-sans");
-@import url('/Login.css');
-
 
 body{
     background-color: #22416B;
-
 }
 
 .buttonBox{
@@ -12,7 +9,7 @@ body{
     flex-direction: row;
     background-color: transparent;
     place-content: center;
-    margin-top: 3.5%;
+    margin-top: 2.5%;
 }
 
 .homeButton{
