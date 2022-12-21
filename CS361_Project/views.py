@@ -5,23 +5,52 @@ from .models import Account, Supervisor, Instructor, TA, Course, LabSection, Cou
 from .functions import generateID, changeName, changePassword, changeEmail, changeAddress,changeTelephone, passwordChecker, sendEmail, assignToTable, removeFromTable
 
 
-# Create your views here.
+class Profile(View):
 
-class EditProfile(View):
     def get(self, request):
-        return render(request, 'Profile/EditProfile.html')
+        request.session['action'] = None
+        return render(request, 'Accounts/Profile.html', {"validForm": "invalid"})
 
     def post(self, request):
-        name = request.POST.get("Name")
-        email = request.POST.get("Email")
-        phone = request.POST.get("Telephone")
-        addy = request.POST.get("Address")
-        curlogin = Account.objects.get(username=request.session.get("username"))
-        changeName(curlogin, name)
-        changeEmail(curlogin, email)
-        changeTelephone(curlogin, phone)
-        changeAddress(curlogin, addy)
-        curlogin.save()
+        request.session['action'] = None
+        if request.POST.get('editProfile') is not None:
+            request.session['action'] = 'edit'
+        elif request.POST.get('changePassword') is not None:
+            request.session['action'] = "changePassword"
+        return render(request, 'Accounts/Profile.html')
+
+
+class EditProfile(View):
+
+    def get(self, request):
+        return render(request, 'Accounts/Profile.html', {"validForm": "valid"})
+
+    def post(self, request):
+        username = request.POST.get("Username")
+        if len(list(Account.objects.filter(username=username))) == 0:  # username doesn't exists
+            error = "Username not in Database"
+            return render(request, 'Accounts/Manage.html', {"error": error, "usernameCSS": "invalidUsername"})
+
+        editAccount = Account.objects.get(username=username)
+        if request.POST.get("Password") != "":
+            if passwordChecker(request.POST.get("Password")) == False:  # Bad Password
+                error = "Password must have at least one digit, one upper case character, one lower case character, one special symbol, and at least 5 characters"
+                return render(request, "Accounts/Manage.html", {"error": error, "passwordCSS": "invalidPassword"})
+            changePassword(editAccount, request.POST.get("Password"))
+
+        if request.POST.get("Email") != "":
+            changeEmail(editAccount, request.POST.get("Email"))
+
+        if request.POST.get("Telephone") != "":
+            changeTelephone(editAccount, request.POST.get("Telephone"))
+
+        if request.POST.get("Address") != "":
+            changeAddress(editAccount, request.POST.get("Address"))
+
+        editAccount.save()
+
+        return render(request, 'Accounts/Profile.html')
+
 
 
 class Login(View):
