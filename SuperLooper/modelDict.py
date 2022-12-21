@@ -1,3 +1,6 @@
+from CS361_Project.models import Account
+
+
 def Account_Dict(modelObj):
     result = {
         "username": modelObj.username,

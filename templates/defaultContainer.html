@@ -11,8 +11,11 @@
     {% block css %}
     {% endblock %}
 </head>
-{% include 'NavBar.html' %}
-<div class = "mainBox center scrollable" id="container">
-    {% block content %}
-    {% endblock %}
-</div>
+<body>
+    {% include 'NavBar.html' %}
+    <div class = "mainBox center scrollable" id="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

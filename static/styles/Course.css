@@ -1,56 +1,15 @@
-.container{
-    display: flex;
-    justify-content: space-around;
+#buttonBox{
+    display: block;
+    width: 161px;
+    height: 568px;
+    border-radius: 50px;
+    margin-left: 79px;
 }
 
-.buttonBox{
-    border: 1px solid black;
-}
-
-
-.createBox input{
-    display:block;
-    outline: none;
-    border: 1px solid black;
-    margin-block: 10px;
-    width : 500px;
-    height: 40px;
-    font-size: 20px;
-    padding-left: 10px;
-
-}
-
-.hidden{
-    visibility: hidden;
-}
-
-.createBox input::placeholder{
-    font-size: 16px;
-    text-align: left;
-}
-
-.createBox button{
-    background-color: transparent;
-    border: 1px solid black;
-    width: 100px;
-    height: 40px;
-    text-align: center;
+.buttonBackgroundInactive {
+    background: #a6b3c3;
 }
 
 .buttonStyle{
-    display: block;
-    border: 1px solid black;
-    background-color: transparent;
-    width:150px;
-    height:50px;
-    margin-block: 10px;
-    line-height: 1.1rem;
+
 }
-
-
-
-
-
-
-
-

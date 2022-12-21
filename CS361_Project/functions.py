@@ -1,5 +1,6 @@
 from django.core import mail
 from django.test import TestCase
+from .models import Course,LabSection,Course_LabSection, Account, TA, Instructor
 import re
 
 
@@ -93,3 +94,37 @@ def sendEmail(message, sender, recipient):
     return mail.send_mail(subject, message,
                           sender, recipient,
                           fail_silently=False)
+
+def assignToTable(user,course, lab):
+    if user.role == "Instructor":
+
+        if len(list(Instructor.objects.filter(Account = user, course = course, labSection= lab))):
+            return False#Wasn't able to assign due to assignment already being present
+
+        newAssign = Instructor(Account = user, course = course, labSection = lab)
+        newAssign.save()
+        return True
+
+    elif user.role == "TA":
+        if len(list(TA.objects.filter(Account=user, course=course, labSection=lab))):
+            return False  # Wasn't able to assign due to assignment already being present
+
+        newAssign = TA(Account = user, course = course, labSection= lab)
+        newAssign.save()
+        return True
+
+    return False#Didn't add anything
+
+
+    #todo make some more tests for this one
+
+
+def removeFromTable(user,course,lab):
+
+    if user.role == "Instructor":
+        toDelete = Instructor.objects.get(Account = user, course = course, labSection=lab)
+        toDelete.delete()
+
+    elif user.role == "TA":
+        toDelete = TA.objects.get(Account=user, course=course, labSection=lab)
+        toDelete.delete()
