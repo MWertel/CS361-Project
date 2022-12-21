@@ -7,6 +7,23 @@ from .functions import generateID, changeName, changePassword, changeEmail, chan
 
 # Create your views here.
 
+class EditProfile(View):
+    def get(self, request):
+        return render(request, 'Profile/EditProfile.html')
+
+    def post(self, request):
+        name = request.POST.get("Name")
+        email = request.POST.get("Email")
+        phone = request.POST.get("Telephone")
+        addy = request.POST.get("Address")
+        curlogin = Account.objects.get(username=request.session.get("username"))
+        changeName(curlogin, name)
+        changeEmail(curlogin, email)
+        changeTelephone(curlogin, phone)
+        changeAddress(curlogin, addy)
+        curlogin.save()
+
+
 class Login(View):
     def get(self, request):
         if request.session.get('is_authenticate'):
