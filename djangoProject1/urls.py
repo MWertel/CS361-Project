@@ -45,6 +45,7 @@ urlpatterns = [
     path('course/editLab/',EditLab.as_view(), name = "edit_lab"),
     path('course/deleteLab/', DeleteLab.as_view(), name = 'delete_lab'),
 
-
+    path('profile/', Profile.as_view(), name="profile"),
+    path('profile/edit/', EditProfile.as_view(), name="edit_profile"),
     path('admin/', admin.site.urls),
 ]
