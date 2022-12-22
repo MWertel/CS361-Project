@@ -87,39 +87,39 @@ class ManageAccounts(View):
         return render(request, 'Manage.html', {"validForm": 'invalid'})
 
     def post(self, request):
+        userList = list(Account.objects.all())
         request.session['action'] = None
         if request.POST.get('create') is not None:
             request.session['action'] = 'create'
         elif request.POST.get('edit') is not None:
             request.session['action'] = 'edit'
-            userList = list(Account.objects.all())
             return render(request, 'Manage.html', {"userList": userList})
         else:
             request.session['action'] = 'delete'
 
-        return render(request, 'Manage.html')
+        return render(request, 'Manage.html',{"userList": userList})
 
 
 class CreateAccount(View):
 
     def post(self, request):
         action = request.session["action"]
-
+        users = list(Account.objects.all())
         if action == "create":
             username = request.POST.get("Username")
             if len(list(Account.objects.filter(username=username))) > 0:  # username already exists
                 error = "Username already exists in Database"
-                return render(request, 'Manage.html', {"error": error})
+                return render(request, 'Manage.html', {"error": error,"userList":users})
 
             role = request.POST.get("role")
             if role == None:  # No role given, the user requires a role
                 error = "Every user needs to have a role"
-                return render(request, "Manage.html", {"error": error})
+                return render(request, "Manage.html", {"error": error,"userList":users})
 
             password = request.POST.get("Password")
             if passwordChecker(password) == False:  # Bad Password
                 error = "Password must have at least one digit, one upper case character, one lower case character, one special symbol, and at least 5 characters"
-                return render(request, "Manage.html", {"error": error})
+                return render(request, "Manage.html", {"error": error,"userList":users})
 
             id = generateID(username)
             newAccount = Account(id=id, username=username,
@@ -132,25 +132,26 @@ class CreateAccount(View):
                                  )
             newAccount.save()
 
-        return render(request, 'Manage.html')
+        return render(request, 'Manage.html', {"userList":users})
 
 
 class EditAccount(View):
 
     def post(self, request):
+        users = list(Account.objects.all())
         action = request.session["action"]
         if action == "edit":
 
             username = request.POST.get("Username")
             if len(list(Account.objects.filter(username=username))) == 0:  # username doesn't exists
                 error = "Username not in Database"
-                return render(request, 'Manage.html', {"error": error})
+                return render(request, 'Manage.html', {"error": error,"userList":users})
 
             editAccount = Account.objects.get(username=username)
             if request.POST.get("Password") != "":
                 if passwordChecker(request.POST.get("Password")) == False:  # Bad Password
                     error = "Password must have at least one digit, one upper case character, one lower case character, one special symbol, and at least 5 characters"
-                    return render(request, "Manage.html", {"error": error})
+                    return render(request, "Manage.html", {"error": error,"userList":users})
                 changePassword(editAccount, request.POST.get("Password"))
 
             if request.POST.get("Name") != "":
@@ -166,23 +167,28 @@ class EditAccount(View):
                 changeAddress(editAccount, request.POST.get("Address"))
 
             editAccount.save()
-        return render(request, 'Manage.html')
+
+        users = list(Account.objects.all())
+        return render(request, 'Manage.html',{"userList":users})
 
 
 class DeleteAccount(View):
 
     def post(self, request):
+        users = list(Account.objects.all())
         action = request.session["action"]
 
         if action == "delete":  # delete
-            username = request.POST.get("username")
+            username = request.POST.get("Username")
             if len(list(Account.objects.filter(username=username))) == 0:  # username doesn't exists
                 error = "Username not in Database"
-                return render(request, 'Manage.html', {"error": error})
+                return render(request, 'Manage.html', {"error": error, "userList":users})
             else:
                 deleteAccount = Account.objects.get(username=username)
                 deleteAccount.delete()
-        return render(request, 'Manage.html')
+
+        users = list(Account.objects.all())
+        return render(request, 'Manage.html',{"userList":users})
 
 
 class Notification(View):
