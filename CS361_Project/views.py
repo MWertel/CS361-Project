@@ -77,8 +77,44 @@ class EditProfile(View):
 
 class Home(View):
     def get(self, request):
-        return checkAuthentication(request)
+        if hasSession(request):
+            if request.session['user']['role'] == 'Supervisor':
+                userList = list(Account.objects.all())
+                return checkAuthentication(request, userList)
+            else:
+                courseList = []
+                labList = []
+                user = Account.objects.get(username = request.session["user"]["username"])
+
+                if user.role == "Instructor":
+                    courses = list(Instructor.objects.filter(instructorAccount = user))
+
+                if user.role == "TA":
+                    courses = list(TA.objects.filter(TAAccount=user))
+
+                for course in courses:
+                    for user in list(Instructor.objects.filter(course = course.course)):
+                        if user.course not in courseList:
+                            courseList.append(user.course)
+                        if user.labSection not in labList:
+                            labList.append(user.labSection)
+
+                    for user in list(TA.objects.all()):
+                        if user.course not in courseList:
+                            courseList.append(user.course)
+                        if user.labSection not in labList:
+                            labList.append(user.labSection)
+
+
+                return render(request,"Home.html",{"courseList":courseList,"labList":labList})
+
+
+        else:
+            return checkAuthentication(request)
+
 #     No Post yet.
+
+
 
 
 class ManageAccounts(View):

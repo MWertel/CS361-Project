@@ -46,6 +46,66 @@
                 </table>
             </div>
         {% endfor %}
+    {% else %}
+        {% for user in context %}
+            <input class = 'inputCheck' id = '{{ user.username }}' type = 'checkbox' name = 'username'>
+            <label class = 'checkBox noselect pointer' for="{{ user.username }}">
+                <span class = 'checkBoxStyle userTitle'>USER: {{ user.name }}</span>
+                <span class ="checkBoxStyle moreInfo">more...</span>
+            </label>
+            <div class ='dropBox noselect'>
+                <table class = 'table containerTable'>
+                    <tr class ='rowTitle'>
+                        <th class = 'leftPadding'>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                    <tr class ='rowInformation'>
+                        <td class = 'leftBorderCurve'>{{ user.name }}</td>
+                        <td class = 'leftPadding'>{{ user.email }}</td>
+                        <td class = 'rightBorderCurve leftPadding'>{{ user.telephone }}</td>
+                    </tr>
+                </table>
+            </div>
+        {% endfor %}
+        {% for course in courseList %}
+            <input class = 'inputCheck' id = '{{ course.name }}' type = 'checkbox' name = 'coursename'>
+            <label class = 'checkBox noselect pointer' for = "{{ course.name }}">
+                <span class = 'checkBoxStyle userTitle'>Course: {{ course.name }}</span>
+                <span class = 'checkBoxStyle moreInfo'>more...</span>
+            </label>
+            <div class = 'dropBox noselect'>
+                <table class = 'table containerTable'>
+                    <tr class = 'rowTitle'>
+                        <th class = 'leftPadding'>Course</th>
+                        <th>Department</th>
+                    </tr>
+                    <tr class = 'rowInformation'>
+                        <td class = leftBorderCurve'>{{ course.name }}</td>
+                        <td class = 'rightBorderCurve'>{{ course.department }}</td>
+                    </tr>
+                </table>
+            </div>
+        {% endfor %}
+        {% for lab in labList %}
+            <input class = 'inputCheck' id = '{{ lab.name }}' type = 'checkbox' name = 'coursename'>
+            <label class = 'checkBox noselect pointer' for = "{{ lab.name }}">
+                <span class = 'checkBoxStyle userTitle'>Lab: {{ lab.name }}</span>
+                <span class = 'checkBoxStyle moreInfo'>more...</span>
+            </label>
+            <div class = 'dropBox noselect'>
+                <table class = 'table containerTable'>
+                    <tr class = 'rowTitle'>
+                        <th class = 'leftPadding'>Lab</th>
+                        <th>Department</th>
+                    </tr>
+                    <tr class = 'rowInformation'>
+                        <td class = leftBorderCurve'>{{ lab.name }}</td>
+                        <td class = 'rightBorderCurve'>{{ lab.department }}</td>
+                    </tr>
+                </table>
+            </div>
+        {% endfor %}
     {% endif %}
 </div>
 </body>
