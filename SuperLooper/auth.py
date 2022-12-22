@@ -34,21 +34,22 @@ def login(request):
     return request.session
 
 
-def checkAuthentication(request):
+def checkAuthentication(request,context = None):
     if hasSession(request):
-        return redirectSession(request)
+        if context is None:
+            return redirectSession(request)
+        return redirectSession(request,context)
     return render(request, 'login.html')
 
 
-def redirectSession(request):
-    context = {}
-    print(request.session.has_key('context'))
-    if request.session.has_key('context'):
-        context.update({'context': request.session['context']})
+def redirectSession(request, error = None):
+    local_context = {}
+    if error is not None:
+        local_context.update({'context': error})
     currentPath = request.path
     if currentPath == '/':
-        return render(request, 'Home.html',context)
-    return render(request, TemplatePath(currentPath),context)
+        return render(request, 'Home.html',local_context)
+    return render(request, TemplatePath(currentPath),local_context)
 
 
 def TemplatePath(path):
