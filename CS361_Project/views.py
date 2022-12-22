@@ -77,8 +77,50 @@ class EditProfile(View):
 
 class Home(View):
     def get(self, request):
-        return checkAuthentication(request)
+        if hasSession(request):
+            if request.session['user']['role'] == 'Supervisor':
+                userList = list(Account.objects.all())
+                return checkAuthentication(request, userList)
+            else:
+                for user in list(Account.objects.all()):
+                    if user.role == "Instructor":
+                        courseList = []
+                        labList = []
+
+                        instructorCourses = Instructor.objects.filter(instructorAccount = user)
+                        for course in instructorCourses:
+                            if user.role == "Instructor":
+                                link = Instructor.objects.filter(instructorAccount = user, course = course)
+                                for i in link:
+                                    courseList.append(i.course)
+                                    labList.append(i.labSection)
+
+                        userList = list(Account.objects.all())
+                        return render(request, 'Home.html', {"context": userList, "courseList": courseList, "labList": labList})
+                    elif user.role == "TA":
+                        courseList = []
+                        labList = []
+                        instructorCourses = Instructor.objects.filter(TAAccount = request.session["user"])
+                        for course in instructorCourses:
+                            if user.role == "TA":
+                                link = Instructor.objects.filter(TAAccount = user, course = course)
+                                for i in link:
+                                    courseList.append(i.course)
+                                    labList.append(i.labSection)
+
+                        userList = list(Account.objects.all())
+                        return render(request, 'Home.html', {"context": userList, "courseList": courseList, "labList": labList})
+
+
+                #return checkAuthentication(request, {courseList, labList})
+
+
+        else:
+            return checkAuthentication(request)
+
 #     No Post yet.
+
+
 
 
 class ManageAccounts(View):

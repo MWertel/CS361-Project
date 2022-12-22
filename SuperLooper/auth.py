@@ -67,4 +67,3 @@ def errorRender(request, page: str, context: Exception):
     contextDict = ast.literal_eval(str(context))
     pageHTML = page + '.html'
     return render(request, pageHTML, contextDict)
-
