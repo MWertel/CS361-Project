@@ -68,3 +68,4 @@ def errorRender(request, page: str, context: Exception):
     pageHTML = page + '.html'
     return render(request, pageHTML, contextDict)
 
+
