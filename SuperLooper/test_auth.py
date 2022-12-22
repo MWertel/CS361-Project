@@ -6,7 +6,7 @@ class testAuth(TestCase):
     rf = None
 
     def setUp(self):
-        rf = RequestFactory()
+        self.rf = RequestFactory()
 
     def testSuccess(self):
         get_request = self.rf.get('/')

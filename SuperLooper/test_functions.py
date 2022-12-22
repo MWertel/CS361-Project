@@ -41,16 +41,16 @@ class TestFunctions(TestCase):
 
     def test_changeTelephoneNumber(self):
         with self.assertRaises(TypeError, msg="Telephone Not a String"):
-            SuperLooper.functions.changeRole(4)
+            SuperLooper.functions.changeTelephone(4)
 
     def test_changeTelephoneNull(self):
         with self.assertRaises(ValueError, msg="Null Telephone Change"):
-            SuperLooper.functions.changeRole("")
+            SuperLooper.functions.changeTelephone("")
 
     def test_changeAddressNumber(self):
         with self.assertRaises(TypeError, msg="Address Not a String"):
-            SuperLooper.functions.changeRole(4)
+            SuperLooper.functions.changeAddress(4)
 
     def test_changeAddressNull(self):
         with self.assertRaises(ValueError, msg="Null Address Change"):
-            SuperLooper.functions.changeRole("")
+            SuperLooper.functions.changeAddress("")
