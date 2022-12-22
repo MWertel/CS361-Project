@@ -417,7 +417,6 @@ class RemoveAssign(View):
             removeFromTable(user, course.labSection)
         return render(request, 'Assign.html')
 
-
 class LogOut(View):
     def get(self, request):
         if request.session.get('is_authenticate'):
