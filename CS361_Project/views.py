@@ -40,7 +40,7 @@ class EditProfile(View):
         return render(request, 'Profile.html', {"validForm": "valid"})
 
     def post(self, request):
-        username = request.session["user"]["username"]
+        username = request.session['user']["username"]
 
         editAccount = Account.objects.get(username=username)
         currPassword = request.POST.get("CurrentPassword")
@@ -49,7 +49,7 @@ class EditProfile(View):
             if currPassword != editAccount.password:
                 #error = {"error": "Current password doesn't match existing one"}
                 #errorRender(request,"Profile",context= ValueError(error))
-                error = "Current Password doens't match with the user's"
+                error = "Current Password doesn't match with the user's"
                 return render(request, "Profile.html", {"error": error})
 
             if passwordChecker(request.POST.get("NewPassword")) == False:  # Bad Password
