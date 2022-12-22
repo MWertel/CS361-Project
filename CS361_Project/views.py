@@ -1,11 +1,10 @@
 from django.middleware.csrf import rotate_token
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views import View
 
-from SuperLooper.auth import checkAuthentication, errorRender, login, redirectSession
-from .models import Account, Supervisor, Instructor, TA, Course, LabSection, Course_LabSection
-from .functions import generateID, changeName, changePassword, changeEmail, changeAddress, changeTelephone, \
-    passwordChecker, sendEmail, assignToTable, removeFromTable
+from SuperLooper.auth import *
+from .models import *
+from SuperLooper.functions import *
 
 
 # Create your views here.
@@ -22,10 +21,100 @@ class Login(View):
         return redirectSession(request)
 
 
+class Profile(View):
+
+    def get(self, request):
+        request.session['action'] = None
+        return render(request, 'Profile.html', {"validForm": "invalid"})
+
+    def post(self, request):
+        request.session['action'] = None
+        if request.POST.get('editProfile') is not None:
+            request.session['action'] = 'edit'
+        elif request.POST.get('changePassword') is not None:
+            request.session['action'] = "changePassword"
+        return render(request, 'Profile.html')
+
+class EditProfile(View):
+    def get(self, request):
+        return render(request, 'Profile.html', {"validForm": "valid"})
+
+    def post(self, request):
+        username = request.session['user']["username"]
+
+        editAccount = Account.objects.get(username=username)
+        currPassword = request.POST.get("CurrentPassword")
+
+        if currPassword != "":
+            if currPassword != editAccount.password:
+                #error = {"error": "Current password doesn't match existing one"}
+                #errorRender(request,"Profile",context= ValueError(error))
+                error = "Current Password doesn't match with the user's"
+                return render(request, "Profile.html", {"error": error})
+
+            if passwordChecker(request.POST.get("NewPassword")) == False:  # Bad Password
+                error = "New Password must have at least one digit, one upper case character, one lower case character, one special symbol, and at least 5 characters"
+                return render(request, "Profile.html", {"error": error})
+
+
+            if request.POST.get("NewPassword") != request.POST.get("NewPasswordRepeat"):
+                error = "Passwords don't match"
+                return render(request, "Profile.html", {"error": error})
+
+            changePassword(editAccount, request.POST.get("Password"))
+
+        if request.POST.get("Email") != "":
+            changeEmail(editAccount, request.POST.get("Email"))
+
+        if request.POST.get("Telephone") != "":
+            changeTelephone(editAccount, request.POST.get("Telephone"))
+
+        if request.POST.get("Address") != "":
+            changeAddress(editAccount, request.POST.get("Address"))
+
+        editAccount.save()
+        return render(request, 'Profile.html')
+
 class Home(View):
     def get(self, request):
-        return checkAuthentication(request)
+        if hasSession(request):
+            if request.session['user']['role'] == 'Supervisor':
+                userList = list(Account.objects.all())
+                return checkAuthentication(request, userList)
+            else:
+                courseList = []
+                labList = []
+                user = Account.objects.get(username = request.session["user"]["username"])
+
+                if user.role == "Instructor":
+                    courses = list(Instructor.objects.filter(instructorAccount = user))
+
+                if user.role == "TA":
+                    courses = list(TA.objects.filter(TAAccount=user))
+
+                for course in courses:
+                    for user in list(Instructor.objects.filter(course = course.course)):
+                        if user.course not in courseList:
+                            courseList.append(user.course)
+                        if user.labSection not in labList:
+                            labList.append(user.labSection)
+
+                    for user in list(TA.objects.all()):
+                        if user.course not in courseList:
+                            courseList.append(user.course)
+                        if user.labSection not in labList:
+                            labList.append(user.labSection)
+
+
+                return render(request,"Home.html",{"courseList":courseList,"labList":labList})
+
+
+        else:
+            return checkAuthentication(request)
+
 #     No Post yet.
+
+
 
 
 class ManageAccounts(View):
@@ -34,39 +123,39 @@ class ManageAccounts(View):
         return render(request, 'Manage.html', {"validForm": 'invalid'})
 
     def post(self, request):
+        userList = list(Account.objects.all())
         request.session['action'] = None
         if request.POST.get('create') is not None:
             request.session['action'] = 'create'
         elif request.POST.get('edit') is not None:
             request.session['action'] = 'edit'
-            userList = list(Account.objects.all())
             return render(request, 'Manage.html', {"userList": userList})
         else:
             request.session['action'] = 'delete'
 
-        return render(request, 'Manage.html')
+        return render(request, 'Manage.html',{"userList": userList})
 
 
 class CreateAccount(View):
 
     def post(self, request):
         action = request.session["action"]
-
+        users = list(Account.objects.all())
         if action == "create":
             username = request.POST.get("Username")
             if len(list(Account.objects.filter(username=username))) > 0:  # username already exists
                 error = "Username already exists in Database"
-                return render(request, 'Manage.html', {"error": error})
+                return render(request, 'Manage.html', {"error": error,"userList":users})
 
             role = request.POST.get("role")
             if role == None:  # No role given, the user requires a role
                 error = "Every user needs to have a role"
-                return render(request, "Manage.html", {"error": error})
+                return render(request, "Manage.html", {"error": error,"userList":users})
 
             password = request.POST.get("Password")
             if passwordChecker(password) == False:  # Bad Password
                 error = "Password must have at least one digit, one upper case character, one lower case character, one special symbol, and at least 5 characters"
-                return render(request, "Manage.html", {"error": error})
+                return render(request, "Manage.html", {"error": error,"userList":users})
 
             id = generateID(username)
             newAccount = Account(id=id, username=username,
@@ -79,25 +168,26 @@ class CreateAccount(View):
                                  )
             newAccount.save()
 
-        return render(request, 'Manage.html')
+        return render(request, 'Manage.html', {"userList":users})
 
 
 class EditAccount(View):
 
     def post(self, request):
+        users = list(Account.objects.all())
         action = request.session["action"]
         if action == "edit":
 
             username = request.POST.get("Username")
             if len(list(Account.objects.filter(username=username))) == 0:  # username doesn't exists
                 error = "Username not in Database"
-                return render(request, 'Manage.html', {"error": error})
+                return render(request, 'Manage.html', {"error": error,"userList":users})
 
             editAccount = Account.objects.get(username=username)
             if request.POST.get("Password") != "":
                 if passwordChecker(request.POST.get("Password")) == False:  # Bad Password
                     error = "Password must have at least one digit, one upper case character, one lower case character, one special symbol, and at least 5 characters"
-                    return render(request, "Manage.html", {"error": error})
+                    return render(request, "Manage.html", {"error": error,"userList":users})
                 changePassword(editAccount, request.POST.get("Password"))
 
             if request.POST.get("Name") != "":
@@ -113,23 +203,28 @@ class EditAccount(View):
                 changeAddress(editAccount, request.POST.get("Address"))
 
             editAccount.save()
-        return render(request, 'Manage.html')
+
+        users = list(Account.objects.all())
+        return render(request, 'Manage.html',{"userList":users})
 
 
 class DeleteAccount(View):
 
     def post(self, request):
+        users = list(Account.objects.all())
         action = request.session["action"]
 
         if action == "delete":  # delete
-            username = request.POST.get("username")
+            username = request.POST.get("Username")
             if len(list(Account.objects.filter(username=username))) == 0:  # username doesn't exists
                 error = "Username not in Database"
-                return render(request, 'Manage.html', {"error": error})
+                return render(request, 'Manage.html', {"error": error, "userList":users})
             else:
                 deleteAccount = Account.objects.get(username=username)
                 deleteAccount.delete()
-        return render(request, 'Manage.html')
+
+        users = list(Account.objects.all())
+        return render(request, 'Manage.html',{"userList":users})
 
 
 class Notification(View):
@@ -373,14 +468,14 @@ class AssignUser(View):
             username = request.POST.get("user")
 
             if username == None:
-                error = "There needs to be an user to assign Course and/or Lab Section"
+                error = "There needs to be a user to assign Course and/or Lab Section"
                 return render(request, 'Assign.html', {"error": error})
 
             course = request.POST.get("course")
             labSection = request.POST.get("lab")
 
             if course == None and labSection == None:
-                error = "There needs to be a course or labsection to assign user to"
+                error = "There needs to be a course or lab section to assign user to"
                 return render(request, 'Assign.html', {"error": error})
 
             user = Account.objects.get(username=username)
@@ -410,11 +505,11 @@ class RemoveAssign(View):
             labSection = request.POST.get("lab")
 
             if course == None and labSection == None:
-                error = "There needs to be a course or labs ection to remove user from"
+                error = "There needs to be a course or lab section to remove user from"
                 return render(request, 'Assign.html', {"error": error})
 
             user = Account.objects.get(username=username)
-            removeFromTable(user, course.labSection)
+            removeFromTable(user, course, labSection)
         return render(request, 'Assign.html')
 
 class LogOut(View):
