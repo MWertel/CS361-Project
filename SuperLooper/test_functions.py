@@ -1,8 +1,9 @@
+import SuperLooper
 from SuperLooper import functions
-import unittest
+from django.test import TestCase
 
 
-class TestFunctions(unittest.TestCase):
+class TestFunctions(TestCase):
 
     def test_generateID(self):
         thislist = []
@@ -16,40 +17,40 @@ class TestFunctions(unittest.TestCase):
 
     def test_changeNameNumber(self):
         with self.assertRaises(TypeError, msg="Name Not a String"):
-            functions.changeName(4)
+            SuperLooper.functions.changeName(4)
 
     def test_changeNameNull(self):
         with self.assertRaises(ValueError, msg="Null Name Change"):
-            functions.changeName("")
+            SuperLooper.functions.changeName("")
 
     def test_changeEmailNumber(self):
         with self.assertRaises(TypeError, msg="Email Not a String"):
-            functions.changeEmail(4)
+            SuperLooper.functions.changeEmail(4)
 
     def test_changeEmailNull(self):
         with self.assertRaises(ValueError, msg="Null Email Change"):
-            functions.changeEmail("")
+            SuperLooper.functions.changeEmail("")
 
     def test_changeRoleNumber(self):
         with self.assertRaises(TypeError, msg="Role Not a String"):
-            functions.changeRole(4)
+            SuperLooper.functions.changeRole(4)
 
     def test_changeRoleNull(self):
         with self.assertRaises(ValueError, msg="Null Role Change"):
-            functions.changeRole("")
+            SuperLooper.functions.changeRole("")
 
     def test_changeTelephoneNumber(self):
         with self.assertRaises(TypeError, msg="Telephone Not a String"):
-            functions.changeRole(4)
+            SuperLooper.functions.changeRole(4)
 
     def test_changeTelephoneNull(self):
         with self.assertRaises(ValueError, msg="Null Telephone Change"):
-            functions.changeRole("")
+            SuperLooper.functions.changeRole("")
 
     def test_changeAddressNumber(self):
         with self.assertRaises(TypeError, msg="Address Not a String"):
-            functions.changeRole(4)
+            SuperLooper.functions.changeRole(4)
 
     def test_changeAddressNull(self):
         with self.assertRaises(ValueError, msg="Null Address Change"):
-            functions.changeRole("")
+            SuperLooper.functions.changeRole("")
