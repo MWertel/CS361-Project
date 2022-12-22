@@ -1,4 +1,4 @@
-#buttonBox{
+.listButton{
     display: block;
     width: 161px;
     height: 568px;
@@ -11,5 +11,114 @@
 }
 
 .buttonStyle{
+    display: block;
+    border: none;
+    margin-bottom: 8px;
+    width: 161px;
+    height: 88px;
+    border-radius: 50px;
+    cursor: pointer;
+    background: #5c8acb;
+}
 
+.buttonText{
+    font-family: "Product Sans Black",sans-serif;
+    font-size: 16pt;
+}
+
+.buttonStyleSelect{
+    background: #22416B;
+}
+
+.formStyle{
+    display: block;
+    text-align:center;
+    margin-top: -575px;
+    width: 950px;
+    height: 568px;
+    background: #a6b3c3;
+    border-radius: 50px;
+    margin-left: 200px;
+}
+
+.formInner{
+    display:block;
+    font-family: "Product Sans Black",sans-serif;
+    color: white;
+    font-size: 20pt;
+    text-align: center;
+}
+
+
+.formSelector{
+    display:block;
+    width: 200px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    margin: 10px auto auto;
+}
+
+
+
+.formInputStyle{
+    display: block;
+    margin: auto;
+    width: 400px;
+    height: 25pt;
+    outline: none;
+    border: 2px solid #5c8acb;
+    border-radius: 25px;
+    font-size: 30pt;
+    font-family: "Product Sans Medium", sans-serif;
+    color: #5c8acb;
+    padding-left: 10px;
+}
+
+.formInputStyle::placeholder{
+    opacity: 75%;
+    color: #5c8acb;
+    text-align: center;
+}
+
+.formButtonStyle{
+    width: 240px;
+    height: 67px;
+    border: 3px solid transparent;
+    background-color: #5c8acb;
+    border-radius: 50px;
+    margin-top:15px;
+    cursor: pointer;
+    font-family: "Product Sans Black",sans-serif;
+    font-size: 20pt;
+    color: white;
+}
+
+.formButtonStyle:hover{
+    background: linear-gradient(#5c8acb,#5c8acb) padding-box, linear-gradient(to left, #abd781, #ad81d7) border-box;
+    background-size: 400%;
+    animation: button-movingGradient 3s infinite alternate-reverse;
+}
+
+@keyframes button-movingGradient {
+  from {background-position: left;}
+    to {background-position: right;}
+}
+
+.errorMessage{
+    border-right: 3px solid white;
+    font-family: "Product Sans Light", sans-serif;
+    font-size: 18pt;
+    width: max-content;
+    margin: 12px auto -15px;
+    user-select: none;
+}
+.Error{
+    color: white;
+    animation : blinking_Char_Error 0.65s step-end infinite;
+}
+
+@keyframes blinking_Char_Error{
+    from,to{border-color: transparent;}
+    50%{border-color: #cb665c}
 }
