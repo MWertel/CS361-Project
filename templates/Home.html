@@ -14,7 +14,7 @@
         {% for user in context %}
             <input class = 'inputCheck' id = '{{ user.username }}' type = 'checkbox' name = 'username'>
             <label class = 'checkBox noselect pointer' for="{{ user.username }}">
-                <span class = 'checkBoxStyle userTitle'>USER: {{ user.name }}</span>
+                <span class = 'checkBoxStyle userTitle'>USER: {{ user.username }}</span>
                 <span class ="checkBoxStyle moreInfo">more...</span>
             </label>
             <div class ='dropBox noselect'>
@@ -46,7 +46,7 @@
                 </table>
             </div>
         {% endfor %}
-    {% else %}
+    {% elif request.session.user.role != 'Supervisor' %}
         {% for user in context %}
             <input class = 'inputCheck' id = '{{ user.username }}' type = 'checkbox' name = 'username'>
             <label class = 'checkBox noselect pointer' for="{{ user.username }}">
@@ -107,6 +107,7 @@
             </div>
         {% endfor %}
     {% endif %}
+
 </div>
 </body>
 </html>

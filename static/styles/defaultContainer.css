@@ -3,6 +3,13 @@
     margin: auto;
 }
 
+.nonscrollable{
+    overflow: auto;
+    border-top: 25px;
+    border-style: solid;
+    border-color: white;
+}
+
 .scrollable::-webkit-scrollbar{
     display:none;
 }

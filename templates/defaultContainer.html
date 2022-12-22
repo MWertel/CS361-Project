@@ -13,7 +13,7 @@
 </head>
 <body>
     {% include 'NavBar.html' %}
-    <div class = "mainBox center scrollable" id="container">
+    <div class = "mainBox center {% block scrollable %}{% endblock %}" id="container">
         {% block content %}
         {% endblock %}
     </div>

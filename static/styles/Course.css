@@ -3,7 +3,7 @@
     width: 161px;
     height: 568px;
     border-radius: 50px;
-    margin-left: 79px;
+    margin-left: 90px;
 }
 
 .buttonBackgroundInactive {
@@ -34,7 +34,7 @@
     display: block;
     text-align:center;
     margin-top: -575px;
-    width: 950px;
+    width: 900px;
     height: 568px;
     background: #a6b3c3;
     border-radius: 50px;

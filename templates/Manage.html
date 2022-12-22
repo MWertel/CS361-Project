@@ -1,103 +1,86 @@
+{% extends 'defaultContainer.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Manage</title>
+{% block title %}
+Manage
+{% endblock %}
+{% block css %}
     <link rel = "stylesheet" href = "{% static 'styles/ManageAccount.css' %}?{% now 'U' %}" type = "text/css">
-</head>
-<body class = "body">
-    <div class = "whole">
+{% endblock %}
+
+{% block content %}
+    <div class = "listButton buttonBackgroundInactive">
         <div class = "buttons">
-            <form action = '/manage/' method = "post"> {% csrf_token %}
+            <form class = 'formInner' action = '/manage/' method = "post"> {% csrf_token %}
                 <a>
-                    <button class = "button" type = "submit" id = 'button' name = "create">Create</button>
+                    <button class = "buttonStyle {% if request.session.action == 'create' %}buttonStyleSelect{% endif %} buttonText" type = "submit" id = 'button' name = "create">Create</button>
                 </a>
                 <a>
-                    <button class = "button" type = "submit" id = 'button' name = "edit">Edit</button>
+                    <button class = "buttonStyle {% if request.session.action == 'edit' %}buttonStyleSelect{% endif %} buttonText" type = "submit" id = 'button' name = "edit">Edit</button>
                 </a>
                 <a>
-                    <button class = "button" type = "submit" id = 'button' name = "delete">Delete</button>
+                    <button class = "buttonStyle {% if request.session.action == 'delete' %}buttonStyleSelect{% endif %} buttonText" type = "submit" id = 'button' name = "delete">Delete</button>
                 </a>
             </form>
         </div>
-        {{ error }}
-        <div class = "forms {{ validForm }}">
+        <span class = 'errorMessage Error'>{{ error }}</span>
+        <div>
             {% if request.session.action == 'create' %}
-                <form class = "createAccountForm" action = "/manage/createAccount/" method = "post" > {% csrf_token %}
-                    <label class = "label" for = "role">Role:</label>
-                    <select class = "roleSelect" id = "role" name = 'role'>
+                <div class = 'formStyle'>
+                <form class = "formInner" action = "/manage/createAccount/" method = "post" > {% csrf_token %}
+                    <label for = "role">Role:</label>
+                    <select class = "formSelector" id = "role" name = 'role'>
                         <option value = "" disabled selected hidden>Choose Role</option>
                         <option value = "Supervisor">Supervisor</option>
                         <option value = "Instructor">Instructor</option>
                         <option value = "TA">TA</option>
                     </select>
-                    <br>
-                    <label class = "label" for="Username">Username:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Username" name = 'Username' >
-                    <br>
-                    <label class = "label" for="Password">Password:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Password" name = 'Password' >
-                    <br>
-                    <label class = "label" for="Name">Name:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Name" name = 'Name' >
-                    <br>
-                    <label class = "label" for = "Email">Email:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Email" name = 'Email'>
-                    <br>
-                    <label class = "label" id = "TelephoneLabel" for = "Telephone">Phone Number:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Telephone" name = 'Telephone'>
-                    <br>
-                    <label class = "label" id = "AddressLabel" for = "Address">Address:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Address" name = 'Address'>
-                    <br>
-                    <button type = "submit">Submit</button>
+                    <label for="Username">Username:</label>
+                    <input class = "formInputStyle" type = "text" id = "Username" name = 'Username' >
+                    <label  for="Password">Password:</label>
+                    <input class = "formInputStyle" type = "text" id = "Password" name = 'Password' >
+                    <label for="Name">Name:</label>
+                    <input class = "formInputStyle" type = "text" id = "Name" name = 'Name' >
+                    <label  for = "Email">Email:</label>
+                    <input class = 'formInputStyle' type = "text" id = "Email" name = 'Email'>
+                    <label  id = "TelephoneLabel" for = "Telephone">Phone Number:</label>
+                    <input class = "formInputStyle" type = "text" id = "Telephone" name = 'Telephone'>
+                    <label id = "AddressLabel" for = "Address">Address:</label>
+                    <input class = "formInputStyle" type = "text" id = "Address" name = 'Address'>
+                    <button  class = 'formButtonStyle' type = "submit">Submit</button>
                 </form>
+                </div>
             {% elif request.session.action == 'edit' %}
-                <form class = "editAccountForm" action = "/manage/editAccount/" method = "post"> {% csrf_token %}
-                    <label class = "label" for="usernameSelector">Username:</label>
-                    <select class = "userName" id = "Username" name = 'Username'>
+                <div class = 'formStyle'>
+                    <form class = "formInner" action = "/manage/editAccount/" method = "post"> {% csrf_token %}
+                    <label  for="usernameSelector">Username:</label>
+                    <select class = "formSelector" id = "usernameSelector" name = 'userName'>
                         <option value = "" disabled selected hidden>Choose User</option>
                         {% for user in userList %}
                             <option value = "{{ user.username }}">{{ user.username }}</option>
                         {% endfor %}
                     </select>
-                    <br>
-                    <label class = "label" for="Password">Password:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Password" name = 'Password' >
-                    <br>
-                    <label class = "label" for="Name">Name:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Name" name = 'Name' >
-                    <br>
-                    <label class = "label" for = "Email">Email:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Email" name = 'Email'>
-                    <br>
-                    <label class = "label" id = "TelephoneLabel" for = "Telephone">Phone Number:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Telephone" name = 'Telephone'>
-                    <br>
-                    <label class = "label" id = "AddressLabel" for = "Address">Address:</label>
-                    <input class = "input {{ inputCSS }}" type = "text" id = "Address" name = 'Address'>
-                    <br>
-                    <button type = "submit">Submit</button>
+                    <label  for="Password">Password:</label>
+                    <input class = "formInputStyle" type = "text" id = "Password" name = 'Password' >
+                    <label for="Name">Name:</label>
+                    <input class = "formInputStyle" type = "text" id = "Name" name = 'Name' >
+                    <label  for = "Email">Email:</label>
+                    <input class = "formInputStyle" type = "text" id = "Email" name = 'Email'>
+                    <label id = "TelephoneLabel" for = "Telephone">Phone Number:</label>
+                    <input class = "formInputStyle" type = "text" id = "Telephone" name = 'Telephone'>
+                    <label  id = "AddressLabel" for = "Address">Address:</label>
+                    <input class = "formInputStyle" type = "text" id = "Address" name = 'Address'>
+                    <button class = 'formButtonStyle' type = "submit">Submit</button>
                 </form>
+                </div>
             {% elif request.session.action == 'delete' %}
-                <form class = "deleteAccountForm" action = "/manage/deleteAccount/" method = "post"> {% csrf_token %}
-                    <label class = "label" for="usernameSelector">Username:</label>
-                    <select class = "Username" id = "Username" name = 'Username'>
-                        <option value = "" disabled selected hidden>Choose User</option>
-                        {% for user in userList %}
-                            <option value = "{{ user.username }}">{{ user.username }}</option>
-                        {% endfor %}
-                    </select>
-
-                    <br>
-                    <button type = "submit">Submit</button>
+                <div class = 'formStyle'>
+                <form class = "formInner" action = "/manage/deleteAccount/" method = "post"> {% csrf_token %}
+                    <label for="Username">Username:</label>
+                    <input class = "formInputStyle" type = "text" id = "Username" name = 'Username' >
+                    <button class = 'formButtonStyle' type = "submit">Submit</button>
                 </form>
+                </div>
             {% endif %}
         </div>
     </div>
-    <button type="button" class = "homeButton" id = "button">
-        <a href="{% url 'home' %}">Return to home screen</a>
-    </button>
-</body>
-</html>
+{% endblock %}
