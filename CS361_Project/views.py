@@ -432,14 +432,14 @@ class AssignUser(View):
             username = request.POST.get("user")
 
             if username == None:
-                error = "There needs to be an user to assign Course and/or Lab Section"
+                error = "There needs to be a user to assign Course and/or Lab Section"
                 return render(request, 'Assign.html', {"error": error})
 
             course = request.POST.get("course")
             labSection = request.POST.get("lab")
 
             if course == None and labSection == None:
-                error = "There needs to be a course or labsection to assign user to"
+                error = "There needs to be a course or lab section to assign user to"
                 return render(request, 'Assign.html', {"error": error})
 
             user = Account.objects.get(username=username)
@@ -469,11 +469,11 @@ class RemoveAssign(View):
             labSection = request.POST.get("lab")
 
             if course == None and labSection == None:
-                error = "There needs to be a course or labs ection to remove user from"
+                error = "There needs to be a course or lab section to remove user from"
                 return render(request, 'Assign.html', {"error": error})
 
             user = Account.objects.get(username=username)
-            removeFromTable(user, course.labSection)
+            removeFromTable(user, course, labSection)
         return render(request, 'Assign.html')
 
 class LogOut(View):
