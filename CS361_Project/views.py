@@ -82,37 +82,31 @@ class Home(View):
                 userList = list(Account.objects.all())
                 return checkAuthentication(request, userList)
             else:
-                for user in list(Account.objects.all()):
-                    if user.role == "Instructor":
-                        courseList = []
-                        labList = []
+                courseList = []
+                labList = []
+                user = Account.objects.get(username = request.session["user"]["username"])
 
-                        instructorCourses = Instructor.objects.filter(instructorAccount = user)
-                        for course in instructorCourses:
-                            if user.role == "Instructor":
-                                link = Instructor.objects.filter(instructorAccount = user, course = course)
-                                for i in link:
-                                    courseList.append(i.course)
-                                    labList.append(i.labSection)
+                if user.role == "Instructor":
+                    courses = list(Instructor.objects.filter(instructorAccount = user))
 
-                        userList = list(Account.objects.all())
-                        return render(request, 'Home.html', {"context": userList, "courseList": courseList, "labList": labList})
-                    elif user.role == "TA":
-                        courseList = []
-                        labList = []
-                        instructorCourses = Instructor.objects.filter(TAAccount = request.session["user"])
-                        for course in instructorCourses:
-                            if user.role == "TA":
-                                link = Instructor.objects.filter(TAAccount = user, course = course)
-                                for i in link:
-                                    courseList.append(i.course)
-                                    labList.append(i.labSection)
+                if user.role == "TA":
+                    courses = list(TA.objects.filter(TAAccount=user))
 
-                        userList = list(Account.objects.all())
-                        return render(request, 'Home.html', {"context": userList, "courseList": courseList, "labList": labList})
+                for course in courses:
+                    for user in list(Instructor.objects.filter(course = course.course)):
+                        if user.course not in courseList:
+                            courseList.append(user.course)
+                        if user.labSection not in labList:
+                            labList.append(user.labSection)
+
+                    for user in list(TA.objects.all()):
+                        if user.course not in courseList:
+                            courseList.append(user.course)
+                        if user.labSection not in labList:
+                            labList.append(user.labSection)
 
 
-                #return checkAuthentication(request, {courseList, labList})
+                return render(request,"Home.html",{"courseList":courseList,"labList":labList})
 
 
         else:
