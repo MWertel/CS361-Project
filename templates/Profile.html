@@ -1,0 +1,54 @@
+{% extends 'defaultContainer.html' %}
+{% load static %}
+
+
+{% block title %}
+Profile
+{% endblock %}
+{% block css %}
+<link rel = "stylesheet" href = "{% static 'styles/Profile.css' %}?{% now 'U' %}" type = "text/css">
+{% endblock %}
+    {% block content %}
+        <div class = 'listButton buttonBackgroundInactive'>
+                <form action = '/profile/' method = "post"> {% csrf_token %}
+                    <button class = 'buttonStyle buttonText{% if request.session.action == 'edit' %}
+                    buttonStyleSelect
+                {% endif %}' type = "submit" id = 'button' name = "editProfile">Edit Profile</button>
+                    <button class = 'buttonStyle buttonText{% if request.session.action == 'changePassword' %}
+                    buttonStyleSelect
+                {% endif %}' type = "submit" id = 'button' name = "changePassword">Change Password</button>
+                </form>
+            </div>
+        {% if request.session.action is not None %}
+        <div class = 'formStyle'>
+         <form class ='formInner'  action ='/profile/edit/' method = "post" > {% csrf_token %}
+            {% if request.session.action == 'edit' %}
+                <label for= "Email">Email:</label>
+                <input class = 'formInputStyle' type = "text" id = "Email" name = 'Email'>
+                <br>
+                <label id = "TelephoneLabel" for = "Telephone">Phone Number:</label>
+                <input class = "formInputStyle" type = "text" id = "Telephone" name = 'Telephone'>
+                <br>
+                <label id = "AddressLabel" for = "Address">Address:</label>
+                <input class = "formInputStyle" type = "text" id = "Address" name = 'Address'>
+                <br>
+            {% elif request.session.action == 'changePassword' %}
+                <label id = "CurrentPasswordLabel" for = "CurrentPassword">Current Password:</label>
+                <input class = "formInputStyle" type = "text" id = "CurrentPassword" name = 'CurrentPassword'>
+                <br>
+                <label id = "PasswordLabel" for = "NewPassword"> New Password:</label>
+                <input class = "formInputStyle" type = "text" id = "NewPassword" name = 'NewPassword'>
+                <br>
+                <label for = "NewPasswordRepeat">Retype New Password:</label>
+                <input class = "formInputStyle {{ passwordCSS }}" type = "text" id = "NewPasswordRepeat" name = 'NewPasswordRepeat'>
+                <br>
+            {% endif %}
+            <button class = 'formButtonStyle' type = "submit">Save</button>
+        </form>
+        {% if error is not None %}
+        <span class = 'errorMessage Error'>{{ error }}</span>
+        {% endif %}
+        </div>
+        {% endif %}
+
+{% endblock %}

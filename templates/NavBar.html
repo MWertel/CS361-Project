@@ -13,7 +13,7 @@ Make sure this is right below the <body> for it to work correctly.
     {% if request.session.user.role == "Supervisor" %}
     <a class = 'linkButton' href="{% url 'course' %}"><button type = 'submit' class = 'navButton buttonText'>COURSE</button></a>
     {% endif %}
-    <a class = 'linkButton'><button type="submit" class = 'navButton buttonText'>PROFILE</button></a>
+    <a class = 'linkButton' href='{% url 'profile' %}'><button type="submit" class = 'navButton buttonText'>PROFILE</button></a>
     <div class = 'homeButton homeButtonIntro'>
         <button type = 'submit' class = 'homeButton homeButtonHover'><a href="{% url 'home' %}"><img class = 'logoBox' src = '{% static "images/LOGO_417x385.png" %}' alt="Super-Looper"></a></button>
     </div>
