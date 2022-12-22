@@ -80,8 +80,11 @@ class Home(View):
         if hasSession(request):
             if request.session['user']['role'] == 'Supervisor':
                 userList = list(Account.objects.all())
-                return checkAuthentication(request, userList)
+                courseList = list(Course.objects.all())
+                labList = list(LabSection.objects.all())
+                return render(request,"Home.html",{"userList":userList,"courseList":courseList,"labList":labList})
             else:
+                userList =[]
                 courseList = []
                 labList = []
                 user = Account.objects.get(username = request.session["user"]["username"])
@@ -94,19 +97,23 @@ class Home(View):
 
                 for course in courses:
                     for user in list(Instructor.objects.filter(course = course.course)):
+                        if user.instructorAccount not in userList:
+                            userList.append(user.instructorAccount)
                         if user.course not in courseList:
                             courseList.append(user.course)
                         if user.labSection not in labList:
                             labList.append(user.labSection)
 
                     for user in list(TA.objects.all()):
+                        if user.TAAccount not in userList:
+                            userList.append(user.TAAccount)
                         if user.course not in courseList:
                             courseList.append(user.course)
                         if user.labSection not in labList:
                             labList.append(user.labSection)
 
 
-                return render(request,"Home.html",{"courseList":courseList,"labList":labList})
+                return render(request,"Home.html",{"userList": userList,"courseList":courseList,"labList":labList})
 
 
         else:
