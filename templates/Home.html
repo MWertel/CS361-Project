@@ -11,7 +11,7 @@
 <div class = "userBox center scrollable" id="userbox">
     {# For each user is a button #}
     {% if request.session.user.role == "Supervisor" %}
-        {% for user in userList %}
+        {% for user in context %}
             <input class = 'inputCheck' id = '{{ user.username }}' type = 'checkbox' name = 'username'>
             <label class = 'checkBox noselect pointer' for="{{ user.username }}">
                 <span class = 'checkBoxStyle userTitle'>USER: {{ user.name }}</span>

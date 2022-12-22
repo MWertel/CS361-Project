@@ -1,4 +1,6 @@
 # Intention: easy verification and store a session on swift.
+import ast
+
 from django.shortcuts import redirect, render
 from CS361_Project.models import Account
 from SuperLooper.modelDict import Account_Dict
@@ -34,18 +36,34 @@ def login(request):
 
 def checkAuthentication(request):
     if hasSession(request):
-        redirectSession(request)
+        return redirectSession(request)
     return render(request, 'login.html')
 
 
 def redirectSession(request):
+    context = {}
+    print(request.session.has_key('context'))
+    if request.session.has_key('context'):
+        context.update({'context': request.session['context']})
     currentPath = request.path
-    if hasSession(request) and currentPath == '/':
-        return redirect('/home')
-    return redirect(currentPath)
+    if currentPath == '/':
+        return render(request, 'Home.html',context)
+    return render(request, TemplatePath(currentPath),context)
+
+
+def TemplatePath(path):
+    cleanPath = path.replace('/', '')
+    return cleanPath.capitalize() + '.html'
 
 
 def hasSession(request):
-    if request.session.is_empty() or not request.session['is_authenticate']:
-        return False
-    return True
+    if not request.session.is_empty():
+        return True
+    return False
+
+
+def errorRender(request, page: str, context: Exception):
+    contextDict = ast.literal_eval(str(context))
+    pageHTML = page + '.html'
+    return render(request, pageHTML, contextDict)
+
