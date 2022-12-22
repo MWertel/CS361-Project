@@ -1,7 +1,5 @@
-from django.test import TestCase, Client
-from CS361_Project.functions import generateID, changeName,changePassword, changeRole,changeEmail,changeAddress,changeTelephone, passwordChecker, sendEmail
-from django.test import TestCase, Client
-from CS361_Project.models import Account, Supervisor
+from SuperLooper.functions import generateID, changeName,changePassword, changeRole,changeEmail,changeAddress,changeTelephone, passwordChecker, sendEmail
+from CS361_Project.models import Account
 from django.core import mail
 from django.test import TestCase
 

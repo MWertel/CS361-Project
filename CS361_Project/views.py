@@ -1,11 +1,10 @@
 from django.middleware.csrf import rotate_token
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views import View
 
-from SuperLooper.auth import checkAuthentication, errorRender, login, redirectSession
-from .models import Account, Supervisor, Instructor, TA, Course, LabSection, Course_LabSection
-from .functions import generateID, changeName, changePassword, changeEmail, changeAddress, changeTelephone, \
-    passwordChecker, sendEmail, assignToTable, removeFromTable
+from SuperLooper.auth import *
+from .models import *
+from SuperLooper.functions import *
 
 
 # Create your views here.

@@ -1,6 +1,6 @@
 from django.core import mail
 from django.test import TestCase
-from .models import Course,LabSection,Course_LabSection, Account, TA, Instructor
+from CS361_Project.models import Course,LabSection,Course_LabSection, Account, TA, Instructor
 import re
 
 
