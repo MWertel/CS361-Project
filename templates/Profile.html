@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel = "stylesheet" href = "{% static 'styles/Profile.css' %}?{% now 'U' %}" type = "text/css">
+</head>
+    <body>
+        <div class = "buttons">
+                <form action = '/profile/' method = "post"> {% csrf_token %}
+                    <button class = "button" type = "submit" id = 'button' name = "editProfile">Edit Profile</button>
+                    <button class = "button" type = "submit" id = 'button' name = "changePassword">Change Password</button>
+                </form>
+            </div>
+        {{ error }}
+        <br>
+
+        <form class = "form {{ validForm }}" action = "/profile/edit/" method = "post" > {% csrf_token %}
+            {% if request.session.action == 'edit' %}
+                <label class = "label" for = "Email">Email:</label>
+                <input class = "input {{ emailCSS }}" type = "text" id = "Email" name = 'Email'>
+                <br>
+                <label class = "label"  id = "TelephoneLabel" for = "Telephone">Phone Number:</label>
+                <input class = "input {{ phoneCSS }}" type = "text" id = "Telephone" name = 'Telephone'>
+                <br>
+                <label class = "label" id = "AddressLabel" for = "Address">Address:</label>
+                <input class = "input {{ addressCSS }}" type = "text" id = "Address" name = 'Address'>
+                <br>
+            {% elif request.session.action == 'changePassword' %}
+                <label class = "label" id = "CurrentPasswordLabel" for = "CurrentPassword">Current Password:</label>
+                <input class = "input {{ passwordCSS }}" type = "text" id = "CurrentPassword" name = 'CurrentPassword'>
+                <br>
+                <label class = "label" id = "PasswordLabel" for = "NewPassword"> New Password:</label>
+                <input class = "input {{ passwordCSS }}" type = "text" id = "NewPassword" name = 'NewPassword'>
+                <br>
+                <label class = "label" id = "PasswordLabel" for = "NewPasswordRepeat">Retype New Password:</label>
+                <input class = "input {{ passwordCSS }}" type = "text" id = "NewPasswordRepeat" name = 'NewPasswordRepeat'>
+                <br>
+            {% endif %}
+            <button type = "submit">Save</button>
+        </form>
+        <button type="button" class = "homeButton" id = "button">
+            <a href="{% url 'home' %}">Return to home screen</a>
+        </button>
+    </body>
+</html>

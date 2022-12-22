@@ -22,6 +22,60 @@ class Login(View):
         return redirectSession(request)
 
 
+class Profile(View):
+
+    def get(self, request):
+        request.session['action'] = None
+        return render(request, 'Profile.html', {"validForm": "invalid"})
+
+    def post(self, request):
+        request.session['action'] = None
+        if request.POST.get('editProfile') is not None:
+            request.session['action'] = 'edit'
+        elif request.POST.get('changePassword') is not None:
+            request.session['action'] = "changePassword"
+        return render(request, 'Profile.html')
+
+class EditProfile(View):
+    def get(self, request):
+        return render(request, 'Profile.html', {"validForm": "valid"})
+
+    def post(self, request):
+        username = request.session["user"]["username"]
+
+        editAccount = Account.objects.get(username=username)
+        currPassword = request.POST.get("CurrentPassword")
+
+        if currPassword != "":
+            if currPassword != editAccount.password:
+                #error = {"error": "Current password doesn't match existing one"}
+                #errorRender(request,"Profile",context= ValueError(error))
+                error = "Current Password doens't match with the user's"
+                return render(request, "Profile.html", {"error": error})
+
+            if passwordChecker(request.POST.get("NewPassword")) == False:  # Bad Password
+                error = "New Password must have at least one digit, one upper case character, one lower case character, one special symbol, and at least 5 characters"
+                return render(request, "Profile.html", {"error": error})
+
+
+            if request.POST.get("NewPassword") != request.POST.get("NewPasswordRepeat"):
+                error = "Passwords don't match"
+                return render(request, "Profile.html", {"error": error})
+
+            changePassword(editAccount, request.POST.get("Password"))
+
+        if request.POST.get("Email") != "":
+            changeEmail(editAccount, request.POST.get("Email"))
+
+        if request.POST.get("Telephone") != "":
+            changeTelephone(editAccount, request.POST.get("Telephone"))
+
+        if request.POST.get("Address") != "":
+            changeAddress(editAccount, request.POST.get("Address"))
+
+        editAccount.save()
+        return render(request, 'Profile.html')
+
 class Home(View):
     def get(self, request):
         return checkAuthentication(request)

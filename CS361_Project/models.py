@@ -14,15 +14,6 @@ class Account(models.Model):
 class Supervisor(models.Model):
     supervisorAccount = models.ForeignKey("Account", on_delete=models.CASCADE, default=None)
 
-    def createCourse(self, department, courseNum, courseName):
-        pass
-
-    def deleteCourse(self, department, courseNum):
-        pass
-
-    def editCourse(self, department, courseNum):
-        pass
-
 class Instructor(models.Model):
     instructorAccount = models.ForeignKey("Account", on_delete = models.CASCADE, default=None)
     course = models.ForeignKey("Course", on_delete= models.SET_NULL, null= True)
