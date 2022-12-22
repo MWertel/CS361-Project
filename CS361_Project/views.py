@@ -40,7 +40,7 @@ class EditProfile(View):
         return render(request, 'Profile.html', {"validForm": "valid"})
 
     def post(self, request):
-        username = request.session["user"]["username"]
+        username = request.session['user']["username"]
 
         editAccount = Account.objects.get(username=username)
         currPassword = request.POST.get("CurrentPassword")
@@ -49,7 +49,7 @@ class EditProfile(View):
             if currPassword != editAccount.password:
                 #error = {"error": "Current password doesn't match existing one"}
                 #errorRender(request,"Profile",context= ValueError(error))
-                error = "Current Password doens't match with the user's"
+                error = "Current Password doesn't match with the user's"
                 return render(request, "Profile.html", {"error": error})
 
             if passwordChecker(request.POST.get("NewPassword")) == False:  # Bad Password
@@ -432,14 +432,14 @@ class AssignUser(View):
             username = request.POST.get("user")
 
             if username == None:
-                error = "There needs to be an user to assign Course and/or Lab Section"
+                error = "There needs to be a user to assign Course and/or Lab Section"
                 return render(request, 'Assign.html', {"error": error})
 
             course = request.POST.get("course")
             labSection = request.POST.get("lab")
 
             if course == None and labSection == None:
-                error = "There needs to be a course or labsection to assign user to"
+                error = "There needs to be a course or lab section to assign user to"
                 return render(request, 'Assign.html', {"error": error})
 
             user = Account.objects.get(username=username)
@@ -469,11 +469,11 @@ class RemoveAssign(View):
             labSection = request.POST.get("lab")
 
             if course == None and labSection == None:
-                error = "There needs to be a course or labs ection to remove user from"
+                error = "There needs to be a course or lab section to remove user from"
                 return render(request, 'Assign.html', {"error": error})
 
             user = Account.objects.get(username=username)
-            removeFromTable(user, course.labSection)
+            removeFromTable(user, course, labSection)
         return render(request, 'Assign.html')
 
 class LogOut(View):
