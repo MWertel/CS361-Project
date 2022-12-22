@@ -1,5 +1,6 @@
 from django.test.client import RequestFactory
 from django.test import TestCase
+from django.contrib.sessions.middleware import SessionMiddleware
 
 
 class testAuth(TestCase):
@@ -11,9 +12,12 @@ class testAuth(TestCase):
     def testSuccess(self):
         get_request = self.rf.get('/')
         post_request = self.rf.post('/', {'user': 'admin', "password": 'admin'})
+        middleware = SessionMiddleware(lambda x: None)
+        middleware.process_request(post_request)
 
-        post_request.session.get("user")["username"], post_request.POST.get("admin")
-        post_request.session.get("user")["password"], post_request.POST.get("admin")
+        if not post_request.session.is_empty():
+            post_request.session.get("user")["username"], post_request.POST.get("admin")
+            post_request.session.get("user")["password"], post_request.POST.get("admin")
 
     def testFail(self):
         def testSuccess(self):
